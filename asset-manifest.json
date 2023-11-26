@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/pippo-web/static/css/main.03db1766.css",
+    "main.js": "/pippo-web/static/js/main.41da1603.js",
+    "static/js/498.0aaa551c.chunk.js": "/pippo-web/static/js/498.0aaa551c.chunk.js",
+    "static/js/703.06db5a33.chunk.js": "/pippo-web/static/js/703.06db5a33.chunk.js",
+    "static/js/598.f0ed9765.chunk.js": "/pippo-web/static/js/598.f0ed9765.chunk.js",
+    "static/js/787.f4f8fa85.chunk.js": "/pippo-web/static/js/787.f4f8fa85.chunk.js",
+    "service-worker.js": "/pippo-web/service-worker.js",
+    "static/media/logo_pipo.png": "/pippo-web/static/media/logo_pipo.ebe7292063d634d6e043.png",
+    "index.html": "/pippo-web/index.html",
+    "main.03db1766.css.map": "/pippo-web/static/css/main.03db1766.css.map",
+    "main.41da1603.js.map": "/pippo-web/static/js/main.41da1603.js.map",
+    "498.0aaa551c.chunk.js.map": "/pippo-web/static/js/498.0aaa551c.chunk.js.map",
+    "703.06db5a33.chunk.js.map": "/pippo-web/static/js/703.06db5a33.chunk.js.map",
+    "598.f0ed9765.chunk.js.map": "/pippo-web/static/js/598.f0ed9765.chunk.js.map",
+    "787.f4f8fa85.chunk.js.map": "/pippo-web/static/js/787.f4f8fa85.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.03db1766.css",
+    "static/js/main.41da1603.js"
+  ]
+}
