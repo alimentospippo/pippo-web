@@ -1,0 +1,145 @@
+.exportar {
+  h3 {
+    margin-bottom: 30px;
+  }
+
+  .content-page {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+
+    .data-button {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .dates-select {
+      font-size: 0.875rem;
+    }
+    .date {
+      width: 20%;
+      border-right: 1px solid rgb(255 164 158);
+      padding: 0 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+
+      &-section {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .button {
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 100%;
+        font-size: 12px;
+        padding: 10px 0;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .button-green {
+        background-color: green;
+      }
+    }
+
+    .select-ruta {
+      width: 100%;
+      text-transform: capitalize;
+    }
+
+    .data {
+      padding: 30px 2px 30px 30px;
+      width: 100%;
+      overflow: auto;
+      overflow-x: hidden;
+
+      &-contain {
+        border: 1px solid #b3b3b359;
+        border-radius: 6px;
+        width: 100%;
+        overflow: auto;
+        border-top-left-radius: 0;
+        margin-top: -1px;
+        height: 30em;
+      }
+
+      &-tabs {
+        display: flex;
+
+        &-tab {
+          border: 1px solid #b3b3b359;
+          padding: 6px 30px;
+          border-top-right-radius: 10px;
+          border-top-left-radius: 10px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #f0f0f0;
+          }
+        }
+
+        .active {
+          background-color: rgb(247 155 155 / 21%);
+          border: 1px solid #ff0c0c36;
+        }
+      }
+      .tabla-main {
+        font-size: 10px;
+        height: 55em;
+
+        .tabla td {
+          padding: 3px 24px;
+          white-space: nowrap;
+        }
+      }
+
+      .no-data {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        width: 100%;
+        justify-content: center;
+      }
+      .no-data-main {
+        width: 100%;
+        height: 100%;
+        display: flex;
+      }
+      .fecha-title {
+        font-size: 10px;
+      }
+      .litros {
+        text-align: right;
+      }
+    }
+  }
+  .content-data {
+    width: 100%;
+    display: flex;
+  }
+
+  .button {
+    margin-bottom: 20px;
+  }
+
+  .download {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    color: #c90000;
+
+    &:hover {
+      background: #fff0f0;
+    }
+  }
+}

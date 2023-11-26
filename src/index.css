@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@300;500&display=swap");
+
+body {
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif; */
+  font-family: Mulish, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+html {
+  background-color: rgb(238, 242, 246);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+#full {
+  min-height: 100vh;
+}
+
+img {
+  width: 100%;
+}
+
+* {
+  margin: 0;
+}
+
+select {
+  height: 40px;
+  border-radius: 6px;
+  padding: 0 10px;
+  border: 1px solid #c9000059;
+}
+
+input {
+  height: 40px;
+  border-radius: 6px;
+  padding: 0 10px;
+  border: 1px solid #c9000059;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #c9000059;
+}
+
+button {
+  background-color: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.button,
+.button-cancel,
+.button-ok {
+  padding: 10px 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 auto;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  max-width: 200px;
+  min-width: 200px;
+  font-weight: 700;
+}
+
+.button-ok {
+  border: 1px solid rgb(0, 179, 48);
+  background-color: rgb(0, 179, 48);
+}
+
+.button {
+  border: 1px solid rgb(33, 150, 243);
+  background-color: rgb(33, 150, 243);
+}
+
+.button:hover {
+  background-color: rgb(20, 142, 242);
+  color: #ffffff;
+}
+.button-cancel {
+  border: 1px solid rgb(244, 67, 54);
+  background-color: rgb(244, 67, 54);
+}
+
+.button-cancel:hover {
+  background-color: rgb(248, 93, 82);
+  color: #ffffff;
+}
+
+.button:disabled {
+  background-color: #75757582;
+  border: #75757582;
+  cursor: default;
+}
+.button.disabled {
+  background-color: #75757582;
+  border: #75757582;
+  cursor: default;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .button {
+    min-width: 100%;
+  }
+}

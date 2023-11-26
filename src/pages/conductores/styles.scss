@@ -1,0 +1,39 @@
+.conductores {
+  .add {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: fit-content;
+  }
+
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    &-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      label {
+        width: 110px;
+        min-width: 110px;
+      }
+      input,
+      select {
+        background-color: rgb(248, 250, 252);
+        text-transform: capitalize;
+      }
+    }
+
+    .button-form {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .inputs {
+      width: 100%;
+    }
+  }
+}

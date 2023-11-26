@@ -1,0 +1,43 @@
+.login {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: rgb(238, 242, 246);
+  &-content {
+    padding: 25px;
+    margin: 0 auto;
+    width: 20%;
+    background-color: #ffffff;
+    border-radius: 8px;
+
+    &-logo {
+      width: 30%;
+      margin: 0 auto;
+    }
+
+    &-text {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+      gap: 20px;
+      align-items: center;
+    }
+
+    button {
+      margin-top: 15px;
+      min-width: 100%;
+      width: 100%;
+    }
+  }
+  input {
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .label {
+    font-size: 12px;
+    margin-bottom: -18px;
+    text-align: left;
+    width: 100%;
+  }
+}

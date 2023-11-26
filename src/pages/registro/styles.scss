@@ -1,0 +1,68 @@
+.registro {
+  h3 {
+    margin-bottom: 30px;
+  }
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 300px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 100%;
+    }
+  }
+
+  .content-page {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .content-form {
+    border: 1px solid #c90000;
+    padding: 30px;
+    border-radius: 10px;
+
+    .price-main {
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+    }
+    .price {
+      color: #005e03;
+      font-size: 20px;
+      display: flex;
+      width: fit-content;
+      flex: none;
+    }
+  }
+  .error {
+    color: #c90000;
+    font-size: 12px;
+  }
+
+  .not-save {
+    color: #c90000;
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .formulario {
+      width: 100%;
+    }
+    .content-page {
+      display: block;
+    }
+  }
+  .content-form {
+    margin-bottom: 20px;
+  }
+}
