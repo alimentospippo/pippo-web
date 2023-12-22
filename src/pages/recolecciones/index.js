@@ -17,6 +17,19 @@ function Index() {
   const [toEdit, setToEdit] = useState(null);
   const [newLts, setNewLts] = useState(null);
 
+  const [filter, setFilter] = useState("");
+
+  const clearFilter = () => {
+    setFilter("");
+    setRecoleccionesNew(recolecciones);
+  };
+  const filterByGanadero = (ganadero) => {
+    const filter = recolecciones.filter((recoleccion) =>
+      recoleccion.ganadero.toLowerCase().includes(ganadero)
+    );
+    setRecoleccionesNew(filter);
+  };
+
   const getListAllRecolecciones = async (fecha) => {
     setFechaSelect(fecha);
     setIsLoading(true);
@@ -97,6 +110,10 @@ function Index() {
     newLts,
     setNewLts,
     onSubmit,
+    filterByGanadero,
+    clearFilter,
+    filter,
+    setFilter,
   };
   return <View {...props} />;
 }

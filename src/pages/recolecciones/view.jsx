@@ -1,6 +1,6 @@
 import React from "react";
 import { FaStickyNote, FaRegFrown, FaSearch } from "react-icons/fa";
-import { AiFillEdit, AiFillSave } from "react-icons/ai";
+import { AiFillEdit, AiFillSave, AiOutlineClose } from "react-icons/ai";
 import DatePicker from "react-datepicker";
 import Header from "../header";
 import { ToastContainer } from "react-toastify";
@@ -19,19 +19,43 @@ function View({
   newLts,
   setNewLts,
   onSubmit,
+  filterByGanadero,
+  clearFilter,
+  filter,
+  setFilter,
 }) {
   return (
     <div className="page recolecciones" id="full">
       <div className="header-page">
         <Header title="Recolecciones" icon={<FaStickyNote />}>
-          <div className="select-fecha">
-            <label className="select-fecha">Seleccione fecha:</label>
-            <DatePicker
-              selected={fechaSelect}
-              onChange={(e) => getListAllRecolecciones(e)}
-              maxDate={new Date()}
-              showIcon={true}
-            />
+          <div className="filters">
+            <div className="select-ganadero">
+              <label className="select-fecha-x">Ganadero:</label>
+              <div className="filter">
+                <input
+                  type="text"
+                  name="g"
+                  id="g"
+                  value={filter}
+                  onChange={(e) => {
+                    setFilter(e.target.value);
+                    filterByGanadero(e.target.value);
+                  }}
+                />
+                <button onClick={() => clearFilter()}>
+                  <AiOutlineClose />
+                </button>
+              </div>
+            </div>
+            <div className="select-fecha">
+              <label className="select-fecha-x">Seleccione fecha:</label>
+              <DatePicker
+                selected={fechaSelect}
+                onChange={(e) => getListAllRecolecciones(e)}
+                maxDate={new Date()}
+                showIcon={true}
+              />
+            </div>
           </div>
         </Header>
       </div>

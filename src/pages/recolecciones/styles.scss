@@ -1,15 +1,37 @@
 .recolecciones {
-  .select-fecha {
+  .filters {
+    display: flex;
+    align-items: center;
+
+    .filter {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      border-radius: 6px;
+      padding: 0 10px;
+      border: 1px solid #c9000059;
+      box-sizing: border-box;
+
+      overflow: hidden;
+      input {
+        padding: 0;
+        border: none;
+        height: 39px;
+        width: 130px;
+      }
+    }
+  }
+
+  .select-ganadero {
+    width: 167px;
     font-size: 12px;
     margin-right: 10px;
   }
 
   .select-fecha {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
+    width: 167px;
+    font-size: 12px;
+    margin-right: 10px;
   }
 
   .no-data {
