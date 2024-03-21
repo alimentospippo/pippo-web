@@ -63,6 +63,7 @@ function Index() {
     "Ruta",
     "Ganadero",
     "Conductor",
+    "GPS",
     "Observaciones",
     "Litros",
     "Total",

@@ -14,9 +14,12 @@ function Index() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
   const [recolecciones, setRecolecciones] = useState([]);
+  const [analisis, setAnalisis] = useState([]);
   const [ruta, setRuta] = useState(0);
   const [loading, setLoading] = useState(false);
   const [reporte, setReporte] = useState(1);
+
+  console.log("analisis", analisis);
 
   const onChangeDate = (dates) => {
     const [start, end] = dates;
@@ -35,7 +38,11 @@ function Index() {
         const response = await axios.get(
           `${URL_BASE}/recolecciones/getRecoleccionesByFecha.php?fechaIni=${fechaIni}&fechaFin=${fechaFin}&rutaId=${ruta}`
         );
+        const responseAnalisis = await axios.get(
+          `${URL_BASE}/analisis/getAnalisisByDate.php?fechaIni=${fechaIni}&fechaFin=${fechaFin}&rutaId=${ruta}`
+        );
         setRecolecciones(response.data);
+        setAnalisis(responseAnalisis.data);
       } catch (error) {
         console.error("Error en la solicitud:", error);
       }
@@ -106,10 +113,46 @@ function Index() {
     dataAll.push(rowData);
   });
 
+  const dataAnalisis = [];
+  analisis?.forEach((item) => {
+    const rowData = {
+      Fecha: item?.fecha,
+      Ruta: item?.nombre_ruta,
+      Analista: item?.nombre_usuario,
+      Silo: item?.silo,
+      Temperatura: item?.temperatura,
+      Acidez: item?.acidez,
+      Alcohol: item?.alcohol,
+      pH: item?.ph,
+      Densidad: item?.densidad,
+      Grasa: item?.grasa,
+      Proteina: item?.proteina,
+      Ciloscopia: item?.ciloscopia,
+      Antibiotico: item?.antibiotico,
+      "Solidos No Grasos": item?.solidos_no_grasos,
+      "Solidos Totales": item?.solidos_totales,
+      Neutralizante: item?.neutralizante,
+      Cloruros: item?.cloruros,
+      Peroxido: item?.peroxido,
+      Peroxdata: item?.peroxdata,
+      Fosfadata: item?.fosfadata,
+      Almidon: item?.almidon,
+      "Prueba Suero": item?.prueba_suero,
+    };
+
+    dataAnalisis.push(rowData);
+  });
+
+  const dataMap = {
+    1: data,
+    2: dataAll,
+    3: dataAnalisis,
+  };
+
   const csvOptions = {
     filename: `tabla_reporte_${reporte}.csv`,
     separator: ";",
-    data: reporte === 1 ? data : dataAll,
+    data: dataMap[reporte] || [],
     uFEFF: true,
   };
 
@@ -244,6 +287,7 @@ function Index() {
     reporte,
     setReporte,
     generarPDF,
+    analisis,
   };
 
   return <View {...props} />;

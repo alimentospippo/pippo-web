@@ -1,14 +1,14 @@
-import React from "react";
-import { FaStickyNote, FaRegFrown, FaSearch } from "react-icons/fa";
-import { AiFillEdit, AiFillSave, AiOutlineClose } from "react-icons/ai";
-import DatePicker from "react-datepicker";
-import Header from "../header";
-import { ToastContainer } from "react-toastify";
+import React from 'react'
+import { FaStickyNote, FaRegFrown, FaSearch } from 'react-icons/fa'
+import { AiFillEdit, AiFillSave, AiOutlineClose, AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
+import DatePicker from 'react-datepicker'
+import Header from '../header'
+import { ToastContainer } from 'react-toastify'
 
-import "react-toastify/dist/ReactToastify.css";
-import "./styles.scss";
+import 'react-toastify/dist/ReactToastify.css'
+import './styles.scss'
 
-function View({
+function View ({
   recoleccionesNew,
   getListAllRecolecciones,
   tableTemplate,
@@ -22,7 +22,7 @@ function View({
   filterByGanadero,
   clearFilter,
   filter,
-  setFilter,
+  setFilter
 }) {
   return (
     <div className="page recolecciones" id="full">
@@ -38,8 +38,8 @@ function View({
                   id="g"
                   value={filter}
                   onChange={(e) => {
-                    setFilter(e.target.value);
-                    filterByGanadero(e.target.value);
+                    setFilter(e.target.value)
+                    filterByGanadero(e.target.value)
                   }}
                 />
                 <button onClick={() => clearFilter()}>
@@ -61,12 +61,15 @@ function View({
       </div>
 
       <div className="content-page">
-        {isLoading ? (
+        {isLoading
+          ? (
           <div className="no-data">
             <FaSearch />
             Buscando...
           </div>
-        ) : recoleccionesNew?.length ? (
+            )
+          : recoleccionesNew?.length
+            ? (
           <table className="tabla">
             <thead>
               <tr>
@@ -76,17 +79,80 @@ function View({
               </tr>
             </thead>
             <tbody>
-              {recoleccionesNew?.map((item) => (
-                <tr key={item?.id}>
+              {console.log(recoleccionesNew)}
+              {[
+                {
+                  id: '19466',
+                  conductor: 'Adrian',
+                  fecha: '2024-03-11',
+                  ganadero: 'VELASQUEZ ROJAS ANA DEL SALVADOR',
+                  ruta_id: '1',
+                  litros: '139',
+                  observaciones: '',
+                  precio: '2000',
+                  ruta: 'porvenir',
+                  gps: 'Valido'
+                },
+                {
+                  id: '19467',
+                  conductor: 'Adrian',
+                  fecha: '2024-03-11',
+                  ganadero: 'SANCHEZ AVELLANEDA ALDEMAR',
+                  ruta_id: '1',
+                  litros: '40',
+                  observaciones: '',
+                  precio: '1900',
+                  gps: 'Invalido'
+                },
+                {
+                  id: '19468',
+                  conductor: 'Adrian',
+                  fecha: '2024-03-11',
+                  ganadero: 'HERRERA GARZON IRMA NELLY',
+                  ruta_id: '1',
+                  litros: '615',
+                  observaciones: '',
+                  precio: '2100',
+                  gps: 'Valido'
+                },
+                {
+                  id: '19469',
+                  conductor: 'Adrian',
+                  fecha: '2024-03-11',
+                  ganadero: 'BAUTISTA LEON ALIRIO',
+                  ruta_id: '1',
+                  litros: '32',
+                  observaciones: '',
+                  precio: '1900',
+                  ruta: 'porvenir',
+                  gps: 'Valido'
+                },
+                {
+                  id: '19470',
+                  conductor: 'Adrian',
+                  fecha: '2024-03-11',
+                  ganadero: 'GONZALES CASAS LAURA JIMENA',
+                  ruta_id: '1',
+                  litros: '130',
+                  observaciones: '',
+                  precio: '2150',
+                  gps: 'Invalido',
+                  ruta: 'porvenir'
+                }
+              ].map((item) => (
+
+                  <tr key={item?.id}>
                   <td>{item?.id}</td>
                   <td>{item?.fecha}</td>
                   <td>{item?.ruta}</td>
                   <td>{item?.ganadero}</td>
                   <td>{item?.conductor}</td>
+                  <td ><div className="column-gps">{item?.gps === 'Invalido' ? <AiOutlineCloseCircle color="red" /> : <AiOutlineCheckCircle color="green" /> } <div className={`column-gps-${item?.gps?.toLowerCase()}`}>{item?.gps}</div> </div> </td>
                   <td>{item?.observaciones}</td>
                   <td className="column-litros">
                     <div>
-                      {toEdit === item.id ? (
+                      {toEdit === item.id
+                        ? (
                         <input
                           className="item-edit"
                           type="number"
@@ -96,9 +162,10 @@ function View({
                           min={0}
                           onChange={(e) => setNewLts(e.target.value)}
                         />
-                      ) : (
-                        item?.litros
-                      )}
+                          )
+                        : (
+                            item?.litros
+                          )}
                     </div>
                     <div
                       className="icon"
@@ -116,12 +183,13 @@ function View({
               ))}
             </tbody>
           </table>
-        ) : (
+              )
+            : (
           <div className="no-data">
             <FaRegFrown />
             No hay datos para esta fecha
           </div>
-        )}
+              )}
       </div>
       <ToastContainer
         position="bottom-center"
@@ -131,7 +199,7 @@ function View({
         pauseOnHover={false}
       />
     </div>
-  );
+  )
 }
 
-export default View;
+export default View

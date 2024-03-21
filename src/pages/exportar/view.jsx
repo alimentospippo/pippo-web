@@ -14,6 +14,7 @@ import { CSVLink } from "react-csv";
 import "./styles.scss";
 import Reporte1 from "./Reporte1";
 import Reporte2 from "./Reporte2";
+import Reporte3Analisis from "./Reporte3Analisis";
 
 function View({
   startDate,
@@ -30,7 +31,7 @@ function View({
   csvOptions,
   reporte,
   setReporte,
-  generarPDF,
+  generarPDF,analisis
 }) {
   return (
     <div className="page exportar" id="full">
@@ -84,7 +85,7 @@ function View({
 
             {recolecciones?.length > 0 && (
               <CSVLink className="button button-green" {...csvOptions}>
-                <FaFileExcel /> Exportar reporte {reporte}
+                <FaFileExcel /> Exportar reporte {reporte === 3 ? "analisis" : reporte}
               </CSVLink>
             )}
 
@@ -108,6 +109,12 @@ function View({
               >
                 Reporte 2
               </div>
+              <div
+                className={`data-tabs-tab ${reporte === 3 && "active"}`}
+                onClick={() => setReporte(3)}
+              >
+                Analisis
+              </div>
             </div>
             <div className="data-contain">
               {loading ? (
@@ -119,15 +126,18 @@ function View({
                 </div>
               ) : recolecciones.length > 0 ? (
                 <div className="tabla-main">
-                  {reporte === 1 ? (
+                  {reporte === 1 && (
                     <Reporte1
                       fechasUnicas={fechasUnicas}
                       ganaderosUnicos={ganaderosUnicos}
                       litrosAgrupados={litrosAgrupados}
                       recolecciones={recolecciones}
-                    />
-                  ) : (
+                    />)}
+                    {reporte === 2 && (
                     <Reporte2 recolecciones={recolecciones} />
+                  )}
+                  {reporte === 3 && (
+                    <Reporte3Analisis analisis={analisis} />
                   )}
                 </div>
               ) : (
