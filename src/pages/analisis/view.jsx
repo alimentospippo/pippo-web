@@ -14,6 +14,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles.scss';
 import moment from 'moment';
+import FormCompartimiento from './formCompartimiento';
 
 function View({
   recoleccionesNew,
@@ -24,16 +25,13 @@ function View({
   compartimientoSelect,
   setCompartimientoSelect,
   userLoggued,
-  FORM_FIELDS,
-  handleSubmit,
-  onSubmit,
-  register,
   rutaSelected,
   setRutaSelected,
-  rutas,
   analisisNew,
   calculateCompartimiento,
-  updateAnalisisSelect
+  updateAnalisisSelect,
+  analisisSelect,
+  getDataAnalisisSelect
 }) {
   return (
     <div className="page analisis" id="full">
@@ -123,83 +121,37 @@ function View({
                   ?.find((r) => r?.ruta_id === rutaSelected)
                   ?.ruta?.toUpperCase()}`}
               </div>
-              <div>Fecha analisis: {moment().format('YYYY-MM-DD')} </div>
+              <div>
+                Fecha analisis:{' '}
+                {getDataAnalisisSelect()?.fecha ||
+                  moment().format('YYYY-MM-DD')}
+              </div>
+              <div>
+                Fecha recoleccion:{' '}
+                {getDataAnalisisSelect()?.fecha_recoleccion ||
+                  moment(fechaSelect).format('YYYY-MM-DD')}
+              </div>
               <div>Compartimiento: {compartimientoSelect}</div>
               <div>Analista: {userLoggued?.usuario} </div>
+              <div className="status_analisis">
+                <div>Estado:</div>
+                <div
+                  className={`pill_status ${
+                    getDataAnalisisSelect()?.estado || 'pendiente'
+                  }`}
+                >
+                  {getDataAnalisisSelect()?.estado || 'Pendiente'}
+                </div>
+              </div>
             </div>
             <div className="form_analisis">
-              <form onSubmit={handleSubmit(onSubmit)} className="form_main">
-                <div className="inputs_fields">
-                  {FORM_FIELDS.map((field, index) => (
-                    <div key={index}>
-                      {field.type === 'text' ? (
-                        <div className="input_field">
-                          <label>{field.name.replaceAll('_', ' ')}</label>
-                          <input
-                            type="number"
-                            min={0}
-                            {...register(field.name)}
-                          />
-                        </div>
-                      ) : field.type === 'radio' ? (
-                        <div className="input_field_radio">
-                          <label for={field.name}>
-                            {field.name.replaceAll('_', ' ')}
-                          </label>
-                          <div className="options_radio">
-                            {field.options.map((option, index) => (
-                              <div
-                                key={index}
-                                className="input_radio"
-                                id={field.name}
-                              >
-                                <input
-                                  type="radio"
-                                  {...option}
-                                  name={field.name}
-                                  value={option.name}
-                                  {...register(field.name)}
-                                />
-                                <label>{option.name}</label>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ) : (
-                        field.type === 'free' && (
-                          <div className="input_field_radio"></div>
-                        )
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="input_field observ">
-                  <label>
-                    {FORM_FIELDS.find(
-                      (f) => f.name === 'observaciones'
-                    ).name.replaceAll('_', ' ')}
-                  </label>
-                  <textarea
-                    className="input_textarea"
-                    {...register(
-                      FORM_FIELDS.find((f) => f.name === 'observaciones').name
-                    )}
-                  />
-                </div>
-
-                <div className="button_content">
-                  <button className="button" type="submit">
-                    Guardar
-                  </button>
-                  <button className="button" type="submit">
-                    ACEPTAR
-                  </button>
-                  <button className="button" type="submit">
-                    RECHAZAR
-                  </button>
-                </div>
-              </form>
+              <FormCompartimiento
+                analisisSelect={getDataAnalisisSelect()}
+                fechaSelect={fechaSelect}
+                rutaSelected={rutaSelected}
+                userLoggued={userLoggued}
+                compartimientoSelect={compartimientoSelect}
+              />
             </div>
           </div>
         </div>
