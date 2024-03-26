@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import moment from "moment";
-import View from "./view";
-import axios from "axios";
-import { URL_BASE } from "../../constants";
-import { useContextoPippo } from "../../ContextoPippo";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import View from './view';
+import axios from 'axios';
+import { URL_BASE } from '../../constants';
+import { useContextoPippo } from '../../ContextoPippo';
+import { toast } from 'react-toastify';
 
 function Index() {
   const { recolecciones } = useContextoPippo();
   const notifySuccess = (message) => toast.success(`Se ${message} el ganadero`);
-  const notifyError = () => toast.error("Error, intente de nuevo");
+  const notifyError = () => toast.error('Error, intente de nuevo');
 
   const [recoleccionesNew, setRecoleccionesNew] = useState([]);
   const [fechaSelect, setFechaSelect] = useState(null);
@@ -17,10 +17,10 @@ function Index() {
   const [toEdit, setToEdit] = useState(null);
   const [newLts, setNewLts] = useState(null);
 
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState('');
 
   const clearFilter = () => {
-    setFilter("");
+    setFilter('');
     setRecoleccionesNew(recolecciones);
   };
   const filterByGanadero = (ganadero) => {
@@ -31,11 +31,14 @@ function Index() {
   };
 
   const getListAllRecolecciones = async (fecha) => {
+    console.log('fecha', fecha);
     setFechaSelect(fecha);
     setIsLoading(true);
 
     const momentDate = moment(fecha);
-    const formattedDate = momentDate.format("YYYY-MM-DD");
+    const formattedDate = momentDate.format('YYYY-MM-DD');
+
+    console.log('formattedDate', formattedDate);
 
     setTimeout(async () => {
       try {
@@ -45,7 +48,7 @@ function Index() {
         );
         setRecoleccionesNew(response.data);
       } catch (error) {
-        console.error("Error en la solicitud:", error);
+        console.error('Error en la solicitud:', error);
       }
 
       setIsLoading(false);
@@ -58,32 +61,32 @@ function Index() {
   }, []);
 
   const tableTemplate = [
-    "Id",
-    "Fecha",
-    "Ruta",
-    "Ganadero",
-    "Conductor",
-    "GPS",
-    "Observaciones",
-    "Litros",
-    "Total",
+    'Id',
+    'Fecha',
+    'Ruta',
+    'Ganadero',
+    'Conductor',
+    'GPS',
+    'Observaciones',
+    'Litros',
+    'Total'
   ];
 
   const update = (data) => {
     fetch(`${URL_BASE}/recolecciones/updateRecoleccion.php`, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({
         item: {
-          ...data,
-        },
-      }),
+          ...data
+        }
+      })
     })
       .then((response) => {
         if (response.status === 400) {
           notifyError();
         } else {
           setToEdit(null);
-          notifySuccess("modifico");
+          notifySuccess('modifico');
           getListAllRecolecciones(fechaSelect);
         }
       })
@@ -95,10 +98,12 @@ function Index() {
   const onSubmit = (id) => {
     const data = {
       id,
-      litros: newLts,
+      litros: newLts
     };
     update(data);
   };
+
+  console.log('recoleccionesNew', recoleccionesNew);
 
   const props = {
     recoleccionesNew,
@@ -114,7 +119,7 @@ function Index() {
     filterByGanadero,
     clearFilter,
     filter,
-    setFilter,
+    setFilter
   };
   return <View {...props} />;
 }

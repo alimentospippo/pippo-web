@@ -45,7 +45,7 @@ function View({
             className="add"
             onClick={() => {
               setIsModalOpen(!isModalOpen);
-              setDataModal({ type: "Agregar" });
+              setDataModal({ type: 'Agregar' });
             }}
           >
             <FaPlus />
@@ -58,6 +58,8 @@ function View({
             <tr>
               <th scope="col">Nombre</th>
               <th scope="col">Direccion</th>
+              <th scope="col">Coordenadas</th>
+              <th scope="col">Compartimientos</th>
               <th></th>
             </tr>
           </thead>
@@ -68,6 +70,8 @@ function View({
                 <tr key={ruta?.nombre}>
                   <td data-label="nombre">{ruta.nombre}</td>
                   <td data-label="direccion">{ruta.direccion}</td>
+                  <td data-label="direccion">lat: - long: -</td>
+                  <td data-label="direccion">{ruta.compartimientos}</td>
                   <td>
                     <div className="actions">
                       <div
@@ -89,7 +93,7 @@ function View({
                         className="item"
                         onClick={() => {
                           setIsModalOpen(!isModalOpen);
-                          setDataModal({ ...ruta, type: "Modificar" });
+                          setDataModal({ ...ruta, type: 'Modificar' });
                         }}
                       >
                         <AiFillEdit />
@@ -172,12 +176,12 @@ function View({
                       <tr key={index}>
                         <td>
                           <AiOutlineCaretUp
-                            cursor={"pointer"}
+                            cursor={'pointer'}
                             onClick={() => upOrder(ganadero.id)}
                           />
 
                           <AiOutlineCaretDown
-                            cursor={"pointer"}
+                            cursor={'pointer'}
                             onClick={() => downOrder(ganadero.id)}
                           />
                         </td>

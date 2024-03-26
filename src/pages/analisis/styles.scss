@@ -1,0 +1,163 @@
+.analisis {
+
+  .select-fecha {
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &-label {
+      font-size: 14px;
+    }
+
+    .date-picker {
+      cursor: pointer;
+      width: 120px;
+    }
+
+    svg {
+      display: none;
+    }
+
+  }
+
+  .analisis_option {
+    cursor: pointer;
+  }
+
+
+  .no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 40px;
+  }
+
+  .options-header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    input {
+      border-radius: 30px;
+    }
+
+
+  }
+
+  .ruta_select {
+    font-size: 14px;
+    color: #c90000;
+    font-weight: bold;
+  }
+
+  .comp_main {
+    margin-top: 20px;
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+
+    .compartimientos {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .comp {
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 5px;
+        width: 134px;
+
+      }
+
+      .comp.select {
+        background-color: #c90000;
+        color: #ffffff;
+      }
+
+      .comp:hover {
+        background-color: #c90000;
+        color: #ffffff;
+        padding: 5px 10px;
+      }
+    }
+  }
+
+  .form_analisis {
+    margin-top: 40px;
+
+    .inputs_fields {
+      display: flex;
+      flex-flow: wrap;
+      gap: 40px;
+
+    }
+
+    .form_main {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .input_field {
+      display: flex;
+      flex-direction: column;
+      width: 150px;
+
+      input {
+        text-align: right;
+      }
+
+      .input_textarea {
+        height: 100px;
+        resize: "none"
+      }
+
+      label {
+        text-transform: capitalize;
+        font-size: 13px;
+      }
+    }
+
+
+    .observ {
+      width: 340px;
+
+    }
+
+    .button_content {
+      display: flex;
+
+    }
+
+
+    .input_field_radio {
+      display: flex;
+      flex-direction: column;
+      width: 150px;
+
+      label {
+        text-transform: capitalize;
+        font-size: 13px;
+      }
+
+      .options_radio {
+        display: flex;
+        gap: 10px;
+      }
+
+      .input_radio {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        input {
+          cursor: pointer;
+        }
+      }
+
+    }
+  }
+
+}

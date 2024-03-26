@@ -52,6 +52,12 @@ input {
   box-sizing: border-box;
 }
 
+textarea {
+  border-radius: 6px;
+  padding: 10px;
+  border: 1px solid #c9000059;
+  box-sizing: border-box;
+}
 input:focus {
   outline: none;
   border: 1px solid #c9000059;
