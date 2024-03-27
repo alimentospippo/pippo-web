@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle, FaPowerOff } from "react-icons/fa";
 import { USERS } from "./constants";
 import { useContextoPippo } from "./ContextoPippo";
+import { icons } from './pages/icons';
 
 function MainHeader() {
   const { userLoggued, setLogin, setUserLoggued } = useContextoPippo();
@@ -17,6 +18,7 @@ function MainHeader() {
 
   return (
     <div className="main-header">
+      <div className="img-logo">{icons('logo')}</div>
       <div className="last">
         <div className="fecha">
           <div className="fechadia">{fechaFormateadaDia}</div>
@@ -29,14 +31,14 @@ function MainHeader() {
             <span className="tipo">{USERS[userLoggued?.tipo]}</span>
           </div>
         </div>
-        <Link to={"/"}>
+        <Link to={'/'}>
           <div
             className="user-off"
             onClick={() => {
               setLogin(false);
               setUserLoggued(null);
-              localStorage.removeItem("user");
-              navigate("/login");
+              localStorage.removeItem('user');
+              navigate('/login');
             }}
           >
             <FaPowerOff />

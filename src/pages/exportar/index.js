@@ -9,7 +9,7 @@ import "jspdf-autotable";
 import logo from "./logo_pipo.png";
 
 function Index() {
-  const { rutas } = useContextoPippo();
+  const { rutas, userLoggued } = useContextoPippo();
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
@@ -18,8 +18,6 @@ function Index() {
   const [ruta, setRuta] = useState(0);
   const [loading, setLoading] = useState(false);
   const [reporte, setReporte] = useState(1);
-
- 
 
   const onChangeDate = (dates) => {
     const [start, end] = dates;
@@ -271,6 +269,16 @@ function Index() {
     doc.save('reporte.pdf');
   };
 
+  const tabsByTypeUser = [
+    {
+      id: 1,
+      title: 'Reporte 1',
+      active: userLoggued?.tipo === '0'
+    },
+    { id: 2, title: 'Reporte 2', active: userLoggued?.tipo === '0' },
+    { id: 3, title: 'Análisis', active: true }
+  ].filter((item) => item.active);
+
   const props = {
     startDate,
     onChangeDate,
@@ -288,6 +296,8 @@ function Index() {
     setReporte,
     generarPDF,
     analisis,
+    tabsByTypeUser,
+    userLoggued
   };
 
   return <View {...props} />;

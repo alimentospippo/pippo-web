@@ -8,7 +8,6 @@ import Conductores from './pages/conductores';
 import Recolecciones from './pages/recolecciones';
 import Exportar from './pages/exportar';
 import Analisis from './pages/analisis';
-import { icons } from './pages/icons';
 import { AiFillHome } from 'react-icons/ai';
 import {
   FaHatCowboy,
@@ -24,7 +23,7 @@ import './App.scss';
 import MainHeader from './MainHeader';
 
 function RoutesJS() {
-  const { login } = useContextoPippo();
+  const { login, userLoggued } = useContextoPippo();
 
   const [navi, setNav] = useState('Inicio');
 
@@ -34,58 +33,64 @@ function RoutesJS() {
       name: 'Inicio',
       path: '/',
       element: <Home />,
-      icon: <AiFillHome />
+      icon: <AiFillHome />,
+      active: true
     },
     {
       id: 2,
       name: 'Recolecciones',
       path: '/recolecciones',
       element: <Recolecciones />,
-      icon: <FaStickyNote />
+      icon: <FaStickyNote />,
+      active: userLoggued?.tipo === '0'
     },
     {
       id: 3,
       name: 'Ganaderos',
       path: '/ganaderos',
       element: <Ganaderos />,
-      icon: <FaHatCowboy />
+      icon: <FaHatCowboy />,
+      active: userLoggued?.tipo === '0'
     },
     {
       id: 4,
       name: 'Rutas',
       path: '/rutas',
       element: <Rutas />,
-      icon: <FaRoute />
+      icon: <FaRoute />,
+      active: userLoggued?.tipo === '0'
     },
     {
       id: 5,
       name: 'Conductores',
       path: '/conductores',
       element: <Conductores />,
-      icon: <ImTruck />
-    },
-    {
-      id: 6,
-      name: 'Exportar',
-      path: '/exportar',
-      element: <Exportar />,
-      icon: <RiFileExcel2Fill />
+      icon: <ImTruck />,
+      active: userLoggued?.tipo === '0'
     },
     {
       id: 6,
       name: 'Analisis',
       path: '/analisis',
       element: <Analisis />,
-      icon: <FaMicroscope />
+      icon: <FaMicroscope />,
+      active: userLoggued?.tipo === '0' || userLoggued?.tipo === '2'
+    },
+    {
+      id: 7,
+      name: 'Exportar',
+      path: '/exportar',
+      element: <Exportar />,
+      icon: <RiFileExcel2Fill />,
+      active: userLoggued?.tipo === '0' || userLoggued?.tipo === '2'
     }
-  ];
+  ].filter((nav) => nav.active);
+  console.log('userLoggued', userLoggued);
   return (
     <HashRouter>
       {login ? (
         <>
           <div className={'menu movil-noview'}>
-            <div className="img-logo">{icons('logo')}</div>
-
             <div className="menu-list">
               {navs.map((nav) => {
                 return (

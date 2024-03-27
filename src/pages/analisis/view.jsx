@@ -1,12 +1,5 @@
 import React from 'react';
 import { FaMicroscope, FaRegFrown, FaSearch } from 'react-icons/fa';
-import {
-  AiFillEdit,
-  AiFillSave,
-  AiOutlineClose,
-  AiOutlineCheckCircle,
-  AiOutlineCloseCircle
-} from 'react-icons/ai';
 import DatePicker from 'react-datepicker';
 import Header from '../header';
 import { ToastContainer } from 'react-toastify';
@@ -80,6 +73,7 @@ function View({
                         onClick={() => {
                           setRutaSelected(item?.ruta_id);
                           updateAnalisisSelect(item?.ruta_id);
+                          setCompartimientoSelect(1);
                         }}
                       >
                         {analisisNew?.find((a) => a?.ruta === item?.ruta_id)

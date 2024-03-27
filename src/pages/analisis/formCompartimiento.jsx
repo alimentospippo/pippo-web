@@ -2,6 +2,28 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { URL_BASE } from '../../constants';
 import { toast } from 'react-toastify';
+import {
+  FaDrumSteelpan,
+  FaTemperatureHigh,
+  FaLemon,
+  FaBurn,
+  FaAllergies,
+  FaWater,
+  FaOilCan,
+  FaAtom,
+  FaBacterium,
+  FaThLarge,
+  FaTh,
+  FaVial,
+  FaWaveSquare,
+  FaGlassWhiskey,
+  FaMendeley,
+  FaPoll,
+  FaFireAlt,
+  FaBreadSlice,
+  FaFlask,
+  FaPencilAlt
+} from 'react-icons/fa';
 import moment from 'moment';
 
 import './styles.scss';
@@ -13,83 +35,85 @@ function FormCompartimiento({
   userLoggued,
   compartimientoSelect
 }) {
-  console.log('analisisSelect....', analisisSelect);
-
   const notifySuccess = (message) => toast.success(`Se ${message} el analisis`);
   const notifyError = () => toast.error('Error, intente de nuevo');
   const positivo_negativo = [{ name: 'positivo' }, { name: 'negativo' }];
   const FORM_FIELDS = [
-    { name: 'silo', type: 'text', icon: 'local-drink' },
-    { name: 'temperatura', type: 'text', icon: 'thermostat' },
-    { name: 'acidez', type: 'text', icon: 'local-fire-department' },
-    { name: 'alcohol', type: 'text', icon: 'science' },
-    { name: 'ph', type: 'text', icon: 'device-hub' },
-    { name: 'densidad', type: 'text', icon: 'shower' },
-    { name: 'grasa', type: 'text', icon: 'oil-barrel' },
-    { name: 'proteina', type: 'text', icon: 'timeline' },
-    { name: 'ciloscopia', type: 'text', icon: 'coronavirus' },
-    { name: 'solidos_no_grasos', type: 'text', icon: 'lens-blur' },
-    { name: 'solidos_totales', type: 'text', icon: 'lens-blur' },
+    { name: 'silo', type: 'text', icon: <FaDrumSteelpan size={12} /> },
+    {
+      name: 'temperatura',
+      type: 'text',
+      icon: <FaTemperatureHigh size={12} />
+    },
+    { name: 'acidez', type: 'text', icon: <FaLemon size={12} /> },
+    { name: 'alcohol', type: 'text', icon: <FaBurn size={12} /> },
+    { name: 'ph', type: 'text', icon: <FaAllergies size={12} /> },
+    { name: 'densidad', type: 'text', icon: <FaWater size={12} /> },
+    { name: 'grasa', type: 'text', icon: <FaOilCan size={12} /> },
+    { name: 'proteina', type: 'text', icon: <FaAtom size={12} /> },
+    { name: 'ciloscopia', type: 'text', icon: <FaBacterium size={12} /> },
+    { name: 'solidos_no_grasos', type: 'text', icon: <FaThLarge size={12} /> },
+    { name: 'solidos_totales', type: 'text', icon: <FaTh size={12} /> },
     { name: '', type: 'free' },
     {
       name: 'antibiotico',
       type: 'radio',
       options: positivo_negativo,
-      icon: 'vaccines'
+      icon: <FaVial size={12} />
     },
     {
       name: 'neutralizante',
       type: 'radio',
       options: positivo_negativo,
-      icon: 'close-fullscreen'
+      icon: <FaWaveSquare size={12} />
     },
     {
       name: 'cloruros',
       type: 'radio',
       options: positivo_negativo,
-      icon: 'gas-meter'
+      icon: <FaGlassWhiskey size={12} />
     },
     {
       name: 'peroxido',
       type: 'radio',
       options: positivo_negativo,
-      icon: 'webhook'
+      icon: <FaMendeley size={12} />
     },
     {
       name: 'peroxdata',
       type: 'radio',
       options: positivo_negativo,
-      icon: 'all-out'
+      icon: <FaPoll size={12} />
     },
     {
       name: 'fosfadata',
       type: 'radio',
       options: positivo_negativo,
-      icon: 'whatshot'
+      icon: <FaFireAlt size={12} />
     },
     {
       name: 'almidon',
       type: 'radio',
       options: positivo_negativo,
-      icon: 'breakfast-dining'
+      icon: <FaBreadSlice size={12} />
     },
     {
       name: 'prueba_suero',
       type: 'radio',
       options: positivo_negativo,
-      icon: 'biotech'
+      icon: <FaFlask size={12} />
     },
     {
       name: 'observaciones',
       type: 'textarea',
-      icon: 'biotech'
+      icon: <FaPencilAlt size={12} />
     }
   ];
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setValue
   } = useForm();
 
@@ -135,8 +159,6 @@ function FormCompartimiento({
       estado: estadoAnalisis
     };
 
-    console.log('body....', body);
-
     await fetch(`${URL_BASE}/analisis/addAnalisis.php`, {
       method: 'POST',
       body: JSON.stringify({
@@ -165,19 +187,26 @@ function FormCompartimiento({
           <div key={index}>
             {field.type === 'text' ? (
               <div className="input_field">
-                <label>{field.name.replaceAll('_', ' ')}</label>
+                <div className="labels">
+                  <div className="icon_field">{field.icon}</div>
+
+                  <label>{field.name.replaceAll('_', ' ')}</label>
+                </div>
                 <input
                   type="number"
                   min={0}
-                  {...register(field.name)}
+                  {...register(field.name, { required: true })}
                   disabled={analisisSelect}
                 />
               </div>
             ) : field.type === 'radio' ? (
               <div className="input_field_radio">
-                <label for={field.name}>
-                  {field.name.replaceAll('_', ' ')}
-                </label>
+                <div className="labels">
+                  <div className="icon_field"> {field.icon}</div>
+                  <label for={field.name}>
+                    {field.name.replaceAll('_', ' ')}
+                  </label>
+                </div>
                 <div className="options_radio">
                   {field.options.map((option, index) => (
                     <div key={index} className="input_radio" id={field.name}>
@@ -186,7 +215,7 @@ function FormCompartimiento({
                         {...option}
                         name={field.name}
                         value={option.name}
-                        {...register(field.name)}
+                        {...register(field.name, { required: true })}
                         disabled={analisisSelect}
                       />
                       <label>{option.name}</label>
@@ -202,12 +231,16 @@ function FormCompartimiento({
       </div>
 
       <div className="input_field observ">
-        <label>
-          {FORM_FIELDS.find((f) => f.name === 'observaciones').name.replaceAll(
-            '_',
-            ' '
-          )}
-        </label>
+        <div className="labels">
+          <div className="icon_field">
+            {FORM_FIELDS.find((f) => f.name === 'observaciones').icon}
+          </div>
+          <label>
+            {FORM_FIELDS.find(
+              (f) => f.name === 'observaciones'
+            ).name.replaceAll('_', ' ')}
+          </label>
+        </div>
         <textarea
           className="input_textarea"
           {...register(
@@ -221,13 +254,19 @@ function FormCompartimiento({
         <div className="button_content">
           <button
             className="button-cancel"
-            onClick={handleSubmit((data) => onSubmit(data, 'rechazado'))}
+            onClick={
+              isValid && handleSubmit((data) => onSubmit(data, 'rechazado'))
+            }
+            disabled={!isValid}
           >
             Rechazado
           </button>
           <button
             className="button-ok"
-            onClick={handleSubmit((data) => onSubmit(data, 'aceptado'))}
+            onClick={
+              isValid && handleSubmit((data) => onSubmit(data, 'aceptado'))
+            }
+            disabled={!isValid}
           >
             Aceptado
           </button>

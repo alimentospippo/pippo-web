@@ -31,7 +31,10 @@ function View({
   csvOptions,
   reporte,
   setReporte,
-  generarPDF,analisis
+  generarPDF,
+  analisis,
+  tabsByTypeUser,
+  userLoggued
 }) {
   return (
     <div className="page exportar" id="full">
@@ -72,10 +75,10 @@ function View({
 
             <div className="dates-select">
               {startDate && (
-                <div>{`Desde ${moment(startDate).format("YYYY-MM-DD")}`}</div>
+                <div>{`Desde ${moment(startDate).format('YYYY-MM-DD')}`}</div>
               )}
               {endDate && (
-                <div>{`Hasta ${moment(endDate).format("YYYY-MM-DD")}`}</div>
+                <div>{`Hasta ${moment(endDate).format('YYYY-MM-DD')}`}</div>
               )}
             </div>
 
@@ -85,11 +88,12 @@ function View({
 
             {recolecciones?.length > 0 && (
               <CSVLink className="button button-green" {...csvOptions}>
-                <FaFileExcel /> Exportar reporte {reporte === 3 ? "analisis" : reporte}
+                <FaFileExcel /> Exportar reporte{' '}
+                {reporte === 3 ? 'analisis' : reporte}
               </CSVLink>
             )}
 
-            {recolecciones?.length > 0 && (
+            {userLoggued?.tipo === '0' && recolecciones?.length > 0 && (
               <button className="button" onClick={() => generarPDF()}>
                 <AiOutlineFileZip /> Generar desprendibles
               </button>
@@ -97,25 +101,16 @@ function View({
           </div>
           <div className="data">
             <div className="data-tabs">
-              <div
-                className={`data-tabs-tab ${reporte === 1 && "active"}`}
-                onClick={() => setReporte(1)}
-              >
-                Reporte 1
-              </div>
-              <div
-                className={`data-tabs-tab ${reporte === 2 && "active"}`}
-                onClick={() => setReporte(2)}
-              >
-                Reporte 2
-              </div>
-              <div
-                className={`data-tabs-tab ${reporte === 3 && "active"}`}
-                onClick={() => setReporte(3)}
-              >
-                Analisis
-              </div>
+              {tabsByTypeUser.map((tab) => (
+                <div
+                  className={`data-tabs-tab ${reporte === tab.id && 'active'}`}
+                  onClick={() => setReporte(tab.id)}
+                >
+                  {tab.title}
+                </div>
+              ))}
             </div>
+            {console.log(reporte)}
             <div className="data-contain">
               {loading ? (
                 <div className="no-data-main">
@@ -132,13 +127,10 @@ function View({
                       ganaderosUnicos={ganaderosUnicos}
                       litrosAgrupados={litrosAgrupados}
                       recolecciones={recolecciones}
-                    />)}
-                    {reporte === 2 && (
-                    <Reporte2 recolecciones={recolecciones} />
+                    />
                   )}
-                  {reporte === 3 && (
-                    <Reporte3Analisis analisis={analisis} />
-                  )}
+                  {reporte === 2 && <Reporte2 recolecciones={recolecciones} />}
+                  {reporte === 3 && <Reporte3Analisis analisis={analisis} />}
                 </div>
               ) : (
                 <div className="no-data-main">

@@ -1,5 +1,4 @@
 .analisis {
-
   .select-fecha {
 
     display: flex;
@@ -24,37 +23,7 @@
   .analisis_option {
     cursor: pointer;
   }
-
-                                                                                                                                                                                                                                                                .pill_status {
-                                                                                                                                                                                                                                                                  border: 1px solid #c90000;
-                                                                                                                                                                                                                                                                  color: #ffffff;
-                                                                                                                                                                                                                                                                  border-radius: 30px;
-                                                                                                                                                                                                                                                                  padding: 5px 10px;
-                                                                                                                                                                                                                                                                  width: fit-content;
-                                                                                                                                                                                                                                                                  text-transform: capitalize;
-                                                                                                                                                                                                                                                                }
-                                                                                                                                
-                                                                                                                                                                                                                                                                .status_analisis {
-                                                                                                                                                                                                                                                                  display: flex;
-                                                                                                                                                                                                                                                                  align-items: center;
-                                                                                                                                                                                                                                                                  gap: 10px;
-                                                                                                                                                                                                                                                                }
-                                                                                                                                
-                                                                                                                                                                                                                                                                .aceptado {
-                                                                                                                                                                                                                                                                  background-color: #006d1d;
-                                                                                                                                                                                                                                                                  border-color: #006d1d;
-                                                                                                                                                                                                                                                                }
-                                                                                                                                
-                                                                                                                                                                                                                                                                .rechazado {
-                                                                                                                                                                                                                                                                  background-color: #c90000;
-                                                                                                                                                                                                                                                                  border-color: #c90000;
-                                                                                                                                                                                                                                                                }
-                                                                                                                                
-                                                                                                                                                                                                                                                                .pendiente {
-                                                                                                                                                                                                                                                                  background-color: #da6404;
-                                                                                                                                                                                                                                                                  border-color: #da6404;
-                                                                                                                                                                                                                                                                }
-
+    
   .no-data {
     display: flex;
     justify-content: center;
@@ -113,6 +82,11 @@
     }
   }
 
+                                                                                                                                .labels {
+                                                                                                                                  display: flex;
+                                                                                                                                  align-items: center;
+                                                                                                                                  gap: 5px;
+                                                                                                                                }
   .form_analisis {
     margin-top: 40px;
 
@@ -129,11 +103,13 @@
       gap: 40px;
     }
 
+        
     .input_field {
       display: flex;
       flex-direction: column;
       width: 150px;
-
+      
+      
       input {
         text-align: right;
       }
@@ -146,6 +122,7 @@
       label {
         text-transform: capitalize;
         font-size: 13px;
+          font-weight: bold;
       }
     }
 
@@ -169,11 +146,15 @@
       label {
         text-transform: capitalize;
         font-size: 13px;
+          font-weight: bold;
       }
 
       .options_radio {
         display: flex;
         gap: 10px;
+      label {
+          font-weight: normal;
+        }
       }
 
       .input_radio {
