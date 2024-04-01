@@ -19,12 +19,6 @@ function Index() {
   const [loading, setLoading] = useState(false);
   const [reporte, setReporte] = useState(userLoggued?.tipo === "2" ? 3 : 1);
 
-  const onChangeDate = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-  };
-
   const getData = async (fecha) => {
     setLoading(true);
 
@@ -281,8 +275,6 @@ function Index() {
 
   const props = {
     startDate,
-    onChangeDate,
-    endDate,
     getData,
     loading,
     rutas,
@@ -298,6 +290,8 @@ function Index() {
     analisis,
     tabsByTypeUser,
     userLoggued,
+    setStartDate,
+    setEndDate,
   };
 
   return <View {...props} />;

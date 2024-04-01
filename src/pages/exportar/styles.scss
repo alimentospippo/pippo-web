@@ -57,7 +57,6 @@
     }
 
     .data {
-      padding: 30px 2px 30px 30px;
       width: 100%;
       overflow: auto;
       overflow-x: hidden;
@@ -81,6 +80,12 @@
           border-top-right-radius: 10px;
           border-top-left-radius: 10px;
           cursor: pointer;
+          display: flex;
+          gap: 20px;
+
+          .export-tab {
+            margin-top: 3px;
+          }
 
           &:hover {
             background-color: #f0f0f0;
@@ -127,10 +132,6 @@
     display: flex;
   }
 
-  .button {
-    margin-bottom: 20px;
-  }
-
   .download {
     display: flex;
     align-items: center;
@@ -160,5 +161,24 @@
   }
   .odd-route-group {
     background-color: #ffffff;
+  }
+  .options_search {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+
+    .option {
+      display: flex;
+      flex-direction: column;
+
+      .button {
+        margin-top: 15px;
+      }
+
+      label {
+        font-size: 14px;
+      }
+    }
   }
 }
