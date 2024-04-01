@@ -142,4 +142,23 @@
       background: #fff0f0;
     }
   }
+
+  .estado-aceptado {
+    background-color: #008600;
+    color: #ffffff;
+  }
+  .estado-rechazado {
+    background-color: #c90000;
+    color: #ffffff;
+  }
+
+  .even-route-group {
+    background-color: #f0f0f0;
+    td {
+      border-top: 2px solid;
+    }
+  }
+  .odd-route-group {
+    background-color: #ffffff;
+  }
 }

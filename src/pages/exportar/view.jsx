@@ -34,7 +34,7 @@ function View({
   generarPDF,
   analisis,
   tabsByTypeUser,
-  userLoggued
+  userLoggued,
 }) {
   return (
     <div className="page exportar" id="full">
@@ -75,10 +75,10 @@ function View({
 
             <div className="dates-select">
               {startDate && (
-                <div>{`Desde ${moment(startDate).format('YYYY-MM-DD')}`}</div>
+                <div>{`Desde ${moment(startDate).format("YYYY-MM-DD")}`}</div>
               )}
               {endDate && (
-                <div>{`Hasta ${moment(endDate).format('YYYY-MM-DD')}`}</div>
+                <div>{`Hasta ${moment(endDate).format("YYYY-MM-DD")}`}</div>
               )}
             </div>
 
@@ -88,12 +88,12 @@ function View({
 
             {recolecciones?.length > 0 && (
               <CSVLink className="button button-green" {...csvOptions}>
-                <FaFileExcel /> Exportar reporte{' '}
-                {reporte === 3 ? 'analisis' : reporte}
+                <FaFileExcel /> Exportar reporte{" "}
+                {reporte === 3 ? "analisis" : reporte}
               </CSVLink>
             )}
 
-            {userLoggued?.tipo === '0' && recolecciones?.length > 0 && (
+            {userLoggued?.tipo === "0" && recolecciones?.length > 0 && (
               <button className="button" onClick={() => generarPDF()}>
                 <AiOutlineFileZip /> Generar desprendibles
               </button>
@@ -103,14 +103,13 @@ function View({
             <div className="data-tabs">
               {tabsByTypeUser.map((tab) => (
                 <div
-                  className={`data-tabs-tab ${reporte === tab.id && 'active'}`}
+                  className={`data-tabs-tab ${reporte === tab.id && "active"}`}
                   onClick={() => setReporte(tab.id)}
                 >
                   {tab.title}
                 </div>
               ))}
             </div>
-            {console.log(reporte)}
             <div className="data-contain">
               {loading ? (
                 <div className="no-data-main">

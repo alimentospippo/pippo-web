@@ -1,13 +1,13 @@
-import React from 'react';
-import { FaMicroscope, FaRegFrown, FaSearch } from 'react-icons/fa';
-import DatePicker from 'react-datepicker';
-import Header from '../header';
-import { ToastContainer } from 'react-toastify';
+import React from "react";
+import { FaMicroscope, FaRegFrown, FaSearch } from "react-icons/fa";
+import DatePicker from "react-datepicker";
+import Header from "../header";
+import { ToastContainer } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css';
-import './styles.scss';
-import moment from 'moment';
-import FormCompartimiento from './formCompartimiento';
+import "react-toastify/dist/ReactToastify.css";
+import "./styles.scss";
+import moment from "moment";
+import FormCompartimiento from "./formCompartimiento";
 
 function View({
   recoleccionesNew,
@@ -18,13 +18,12 @@ function View({
   compartimientoSelect,
   setCompartimientoSelect,
   userLoggued,
-  rutaSelected,
-  setRutaSelected,
-  analisisNew,
   calculateCompartimiento,
-  updateAnalisisSelect,
-  analisisSelect,
-  getDataAnalisisSelect
+  getDataAnalisisCompartimiento,
+  getListAnalisisById,
+  isLoadingAnalisis,
+  recoleccionSelect,
+  setRecoleccionSelect,
 }) {
   return (
     <div className="page analisis" id="full">
@@ -44,10 +43,15 @@ function View({
       </div>
 
       <div className="content-page">
-        {isLoading ? (
+        {isLoading && isLoadingAnalisis ? (
           <div className="no-data">
             <FaSearch />
-            Buscando...
+            Actualizando data
+          </div>
+        ) : isLoading ? (
+          <div className="no-data">
+            <FaSearch />
+            Buscando recolecciones...
           </div>
         ) : recoleccionesNew?.length ? (
           <>
@@ -61,24 +65,27 @@ function View({
               </thead>
               <tbody>
                 {recoleccionesNew.map((item) => (
-                  <tr key={item?.id}>
+                  <tr
+                    key={item?.id}
+                    className={
+                      recoleccionSelect?.id === item?.id && "row_select"
+                    }
+                  >
+                    <td>{item?.id}</td>
                     <td>{item?.fecha}</td>
                     <td>{item?.ruta}</td>
                     <td>{item?.conductor}</td>
-                    <td>{item?.observaciones}</td>
                     <td>{item?.litros} Lts.</td>
                     <td>
                       <div
                         className="analisis_option"
                         onClick={() => {
-                          setRutaSelected(item?.ruta_id);
-                          updateAnalisisSelect(item?.ruta_id);
+                          setRecoleccionSelect(item);
+                          getListAnalisisById(item?.id);
                           setCompartimientoSelect(1);
                         }}
                       >
-                        {analisisNew?.find((a) => a?.ruta === item?.ruta_id)
-                          ? 'Ver'
-                          : 'Analizar'}
+                        Ver
                       </div>
                     </td>
                   </tr>
@@ -93,62 +100,69 @@ function View({
           </div>
         )}
       </div>
-
-      {rutaSelected && (
-        <div className="content-page comp_main">
-          <div className="compartimientos">
-            {calculateCompartimiento().map((_, index) => (
-              <div
-                className={`comp ${
-                  compartimientoSelect === index + 1 && 'select'
-                }`}
-                onClick={() => setCompartimientoSelect(index + 1)}
-              >
-                Compartimiento {index + 1}
-              </div>
-            ))}
-          </div>
-          <div>
-            <div className="comp_title">
-              <div className="ruta_select">
-                {`Ruta: ${recoleccionesNew
-                  ?.find((r) => r?.ruta_id === rutaSelected)
-                  ?.ruta?.toUpperCase()}`}
-              </div>
-              <div>
-                Fecha analisis:{' '}
-                {getDataAnalisisSelect()?.fecha ||
-                  moment().format('YYYY-MM-DD')}
-              </div>
-              <div>
-                Fecha recoleccion:{' '}
-                {getDataAnalisisSelect()?.fecha_recoleccion ||
-                  moment(fechaSelect).format('YYYY-MM-DD')}
-              </div>
-              <div>Compartimiento: {compartimientoSelect}</div>
-              <div>Analista: {userLoggued?.usuario} </div>
-              <div className="status_analisis">
-                <div>Estado:</div>
+      {isLoadingAnalisis && !isLoading ? (
+        <div className="no-data">
+          <FaSearch />
+          Buscando analisis...
+        </div>
+      ) : (
+        recoleccionSelect && (
+          <div className="content-page comp_main">
+            <div className="compartimientos">
+              {calculateCompartimiento().map((_, index) => (
                 <div
-                  className={`pill_status ${
-                    getDataAnalisisSelect()?.estado || 'pendiente'
+                  className={`comp ${
+                    compartimientoSelect === index + 1 && "select"
                   }`}
+                  onClick={() => setCompartimientoSelect(index + 1)}
                 >
-                  {getDataAnalisisSelect()?.estado || 'Pendiente'}
+                  <div>Compartimiento {index + 1}</div>
+                </div>
+              ))}
+            </div>
+            <div>
+              <div className="comp_title">
+                <div className="ruta_select">
+                  {`Ruta: ${recoleccionSelect?.ruta?.toUpperCase()}`}
+                </div>
+                <div>
+                  Fecha analisis:{" "}
+                  {getDataAnalisisCompartimiento()?.fecha ||
+                    moment().format("YYYY-MM-DD")}
+                </div>
+                <div>
+                  Fecha recoleccion:{" "}
+                  {getDataAnalisisCompartimiento()?.fecha_recoleccion ||
+                    moment(fechaSelect).format("YYYY-MM-DD")}
+                </div>
+                <div>Compartimiento: {compartimientoSelect}</div>
+                <div>Analista: {userLoggued?.usuario} </div>
+                <div className="status_analisis">
+                  <div>Estado:</div>
+                  <div
+                    className={`pill_status ${
+                      getDataAnalisisCompartimiento()?.estado || "pendiente"
+                    }`}
+                  >
+                    {getDataAnalisisCompartimiento()?.estado || "Pendiente"}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="form_analisis">
-              <FormCompartimiento
-                analisisSelect={getDataAnalisisSelect()}
-                fechaSelect={fechaSelect}
-                rutaSelected={rutaSelected}
-                userLoggued={userLoggued}
-                compartimientoSelect={compartimientoSelect}
-              />
+              <div className="form_analisis">
+                <FormCompartimiento
+                  analisisSelect={getDataAnalisisCompartimiento()}
+                  fechaSelect={fechaSelect}
+                  userLoggued={userLoggued}
+                  compartimientoSelect={compartimientoSelect}
+                  id_recoleccion={recoleccionSelect?.id}
+                  rutaSelected={recoleccionSelect?.ruta_id}
+                  getListAllRecolecciones={getListAllRecolecciones}
+                  getListAnalisisById={getListAnalisisById}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        )
       )}
       <ToastContainer
         position="bottom-center"

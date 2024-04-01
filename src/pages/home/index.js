@@ -8,7 +8,8 @@ import { useContextoPippo } from "../../ContextoPippo";
 import "./styles.scss";
 
 function Index() {
-  const { rutas, conductores, recolecciones, ganaderos } = useContextoPippo();
+  const { rutas, conductores, recolecciones, ganaderos, userLoggued } =
+    useContextoPippo();
 
   const getPorcentajeXRuta = (rutaId) => {
     const totalXRuta = ganaderos?.filter((g) => g.ruta === rutaId)?.length || 1;
@@ -23,69 +24,71 @@ function Index() {
       <div className="header-page">
         <Header title="Inicio" icon={<AiFillHome />} />
       </div>
-      <div className="content-page-home">
-        <div className="widget">
-          <div className="widget-title">
-            <FaRoute />
-            Recolecciones por ruta hoy
-          </div>
-          <div className="widget-content">
-            <div className="progreso-main">
-              {rutas?.map((r) => (
-                <div className="progreso-item">
-                  <div className="progreso-title">
-                    <label className="progreso-title-nombre" for={r.id}>
-                      {r.nombre}
-                    </label>
-                    <div></div>
-                    <div>{getPorcentajeXRuta(r.id) || 0} %</div>
-                  </div>
-                  <div class="barra-progreso">
-                    <div class="barra-fondo">
-                      <div
-                        class="barra-llena"
-                        style={{
-                          width: `${getPorcentajeXRuta(r.id) || 0}%`,
-                        }}
-                      ></div>
+      {userLoggued?.tipo === "0" && (
+        <div className="content-page-home">
+          <div className="widget">
+            <div className="widget-title">
+              <FaRoute />
+              Recolecciones por ruta hoy
+            </div>
+            <div className="widget-content">
+              <div className="progreso-main">
+                {rutas?.map((r) => (
+                  <div className="progreso-item">
+                    <div className="progreso-title">
+                      <label className="progreso-title-nombre" for={r.id}>
+                        {r.nombre}
+                      </label>
+                      <div></div>
+                      <div>{getPorcentajeXRuta(r.id) || 0} %</div>
+                    </div>
+                    <div class="barra-progreso">
+                      <div class="barra-fondo">
+                        <div
+                          class="barra-llena"
+                          style={{
+                            width: `${getPorcentajeXRuta(r.id) || 0}%`,
+                          }}
+                        ></div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="widget">
+            <div className="widget-title">
+              <ImTruck />
+              Recolecciones por conductor hoy
+            </div>
+            <div className="widget-content">
+              <div className="progreso-main">
+                {conductores?.map((r) => (
+                  <div className="progreso-item">
+                    <div className="progreso-title">
+                      <label className="progreso-title-nombre" for={r.id}>
+                        {r.nombre}
+                      </label>
+                      <div>{getPorcentajeXRuta(r.ruta) || 0} %</div>
+                    </div>
+                    <div class="barra-progreso">
+                      <div class="barra-fondo">
+                        <div
+                          class="barra-llena"
+                          style={{
+                            width: `${getPorcentajeXRuta(r.ruta) || 0}%`,
+                          }}
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-        <div className="widget">
-          <div className="widget-title">
-            <ImTruck />
-            Recolecciones por conductor hoy
-          </div>
-          <div className="widget-content">
-            <div className="progreso-main">
-              {conductores?.map((r) => (
-                <div className="progreso-item">
-                  <div className="progreso-title">
-                    <label className="progreso-title-nombre" for={r.id}>
-                      {r.nombre}
-                    </label>
-                    <div>{getPorcentajeXRuta(r.ruta) || 0} %</div>
-                  </div>
-                  <div class="barra-progreso">
-                    <div class="barra-fondo">
-                      <div
-                        class="barra-llena"
-                        style={{
-                          width: `${getPorcentajeXRuta(r.ruta) || 0}%`,
-                        }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

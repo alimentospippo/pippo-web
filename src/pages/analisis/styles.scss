@@ -1,6 +1,5 @@
 .analisis {
   .select-fecha {
-
     display: flex;
     align-items: center;
     gap: 10px;
@@ -17,13 +16,12 @@
     svg {
       display: none;
     }
-
   }
 
   .analisis_option {
     cursor: pointer;
   }
-    
+
   .no-data {
     display: flex;
     justify-content: center;
@@ -40,8 +38,6 @@
     input {
       border-radius: 30px;
     }
-
-
   }
 
   .ruta_select {
@@ -66,7 +62,11 @@
         padding: 5px 10px;
         border-radius: 5px;
         width: 134px;
-
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
       }
 
       .comp.select {
@@ -82,11 +82,18 @@
     }
   }
 
-                                                                                                                                .labels {
-                                                                                                                                  display: flex;
-                                                                                                                                  align-items: center;
-                                                                                                                                  gap: 5px;
-                                                                                                                                }
+  .row_select {
+    background-color: #33f43345;
+  }
+  .row_select:hover {
+    background-color: #33f43345;
+  }
+
+  .labels {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
   .form_analisis {
     margin-top: 40px;
 
@@ -94,7 +101,6 @@
       display: flex;
       flex-flow: wrap;
       gap: 40px;
-
     }
 
     .form_main {
@@ -103,40 +109,34 @@
       gap: 40px;
     }
 
-        
     .input_field {
       display: flex;
       flex-direction: column;
       width: 150px;
-      
-      
+
       input {
         text-align: right;
       }
 
       .input_textarea {
         height: 100px;
-        resize: "none"
+        resize: "none";
       }
 
       label {
         text-transform: capitalize;
         font-size: 13px;
-          font-weight: bold;
+        font-weight: bold;
       }
     }
 
-
     .observ {
       width: 340px;
-
     }
 
     .button_content {
       display: flex;
-
     }
-
 
     .input_field_radio {
       display: flex;
@@ -146,13 +146,13 @@
       label {
         text-transform: capitalize;
         font-size: 13px;
-          font-weight: bold;
+        font-weight: bold;
       }
 
       .options_radio {
         display: flex;
         gap: 10px;
-      label {
+        label {
           font-weight: normal;
         }
       }
@@ -166,8 +166,34 @@
           cursor: pointer;
         }
       }
-
     }
   }
+  .status_analisis {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 
+  .pill_status {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: capitalize;
+    width: 100px;
+    justify-content: center;
+  }
+  .pill_status.pendiente {
+    background-color: #d66000;
+  }
+  .pill_status.aceptado {
+    background-color: #00a000;
+  }
+  .pill_status.rechazado {
+    background-color: #c90000;
+  }
 }

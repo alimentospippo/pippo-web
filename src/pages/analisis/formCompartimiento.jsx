@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { URL_BASE } from '../../constants';
-import { toast } from 'react-toastify';
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { URL_BASE } from "../../constants";
+import { toast } from "react-toastify";
 import {
   FaDrumSteelpan,
   FaTemperatureHigh,
@@ -22,99 +22,102 @@ import {
   FaFireAlt,
   FaBreadSlice,
   FaFlask,
-  FaPencilAlt
-} from 'react-icons/fa';
-import moment from 'moment';
+  FaPencilAlt,
+} from "react-icons/fa";
+import moment from "moment";
 
-import './styles.scss';
+import "./styles.scss";
 
 function FormCompartimiento({
   analisisSelect,
   fechaSelect,
   rutaSelected,
   userLoggued,
-  compartimientoSelect
+  compartimientoSelect,
+  id_recoleccion,
+  getListAllRecolecciones,
+  getListAnalisisById,
 }) {
   const notifySuccess = (message) => toast.success(`Se ${message} el analisis`);
-  const notifyError = () => toast.error('Error, intente de nuevo');
-  const positivo_negativo = [{ name: 'positivo' }, { name: 'negativo' }];
+  const notifyError = () => toast.error("Error, intente de nuevo");
+  const positivo_negativo = [{ name: "positivo" }, { name: "negativo" }];
   const FORM_FIELDS = [
-    { name: 'silo', type: 'text', icon: <FaDrumSteelpan size={12} /> },
+    { name: "silo", type: "text", icon: <FaDrumSteelpan size={12} /> },
     {
-      name: 'temperatura',
-      type: 'text',
-      icon: <FaTemperatureHigh size={12} />
+      name: "temperatura",
+      type: "text",
+      icon: <FaTemperatureHigh size={12} />,
     },
-    { name: 'acidez', type: 'text', icon: <FaLemon size={12} /> },
-    { name: 'alcohol', type: 'text', icon: <FaBurn size={12} /> },
-    { name: 'ph', type: 'text', icon: <FaAllergies size={12} /> },
-    { name: 'densidad', type: 'text', icon: <FaWater size={12} /> },
-    { name: 'grasa', type: 'text', icon: <FaOilCan size={12} /> },
-    { name: 'proteina', type: 'text', icon: <FaAtom size={12} /> },
-    { name: 'ciloscopia', type: 'text', icon: <FaBacterium size={12} /> },
-    { name: 'solidos_no_grasos', type: 'text', icon: <FaThLarge size={12} /> },
-    { name: 'solidos_totales', type: 'text', icon: <FaTh size={12} /> },
-    { name: '', type: 'free' },
+    { name: "acidez", type: "text", icon: <FaLemon size={12} /> },
+    { name: "alcohol", type: "text", icon: <FaBurn size={12} /> },
+    { name: "ph", type: "text", icon: <FaAllergies size={12} /> },
+    { name: "densidad", type: "text", icon: <FaWater size={12} /> },
+    { name: "grasa", type: "text", icon: <FaOilCan size={12} /> },
+    { name: "proteina", type: "text", icon: <FaAtom size={12} /> },
+    { name: "ciloscopia", type: "text", icon: <FaBacterium size={12} /> },
+    { name: "solidos_no_grasos", type: "text", icon: <FaThLarge size={12} /> },
+    { name: "solidos_totales", type: "text", icon: <FaTh size={12} /> },
+    { name: "", type: "free" },
     {
-      name: 'antibiotico',
-      type: 'radio',
+      name: "antibiotico",
+      type: "radio",
       options: positivo_negativo,
-      icon: <FaVial size={12} />
+      icon: <FaVial size={12} />,
     },
     {
-      name: 'neutralizante',
-      type: 'radio',
+      name: "neutralizante",
+      type: "radio",
       options: positivo_negativo,
-      icon: <FaWaveSquare size={12} />
+      icon: <FaWaveSquare size={12} />,
     },
     {
-      name: 'cloruros',
-      type: 'radio',
+      name: "cloruros",
+      type: "radio",
       options: positivo_negativo,
-      icon: <FaGlassWhiskey size={12} />
+      icon: <FaGlassWhiskey size={12} />,
     },
     {
-      name: 'peroxido',
-      type: 'radio',
+      name: "peroxido",
+      type: "radio",
       options: positivo_negativo,
-      icon: <FaMendeley size={12} />
+      icon: <FaMendeley size={12} />,
     },
     {
-      name: 'peroxdata',
-      type: 'radio',
+      name: "peroxdata",
+      type: "radio",
       options: positivo_negativo,
-      icon: <FaPoll size={12} />
+      icon: <FaPoll size={12} />,
     },
     {
-      name: 'fosfadata',
-      type: 'radio',
+      name: "fosfadata",
+      type: "radio",
       options: positivo_negativo,
-      icon: <FaFireAlt size={12} />
+      icon: <FaFireAlt size={12} />,
     },
     {
-      name: 'almidon',
-      type: 'radio',
+      name: "almidon",
+      type: "radio",
       options: positivo_negativo,
-      icon: <FaBreadSlice size={12} />
+      icon: <FaBreadSlice size={12} />,
     },
     {
-      name: 'prueba_suero',
-      type: 'radio',
+      name: "prueba_suero",
+      type: "radio",
       options: positivo_negativo,
-      icon: <FaFlask size={12} />
+      icon: <FaFlask size={12} />,
     },
     {
-      name: 'observaciones',
-      type: 'textarea',
-      icon: <FaPencilAlt size={12} />
-    }
+      name: "observaciones",
+      type: "textarea",
+      icon: <FaPencilAlt size={12} />,
+    },
   ];
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-    setValue
+    setValue,
   } = useForm();
 
   useEffect(() => {
@@ -124,15 +127,16 @@ function FormCompartimiento({
       });
     } else {
       FORM_FIELDS.forEach((field) => {
-        setValue(field.name, '');
+        setValue(field.name, "");
       });
     }
   }, [analisisSelect, setValue]);
 
   const onSubmit = async (data, estadoAnalisis) => {
     const body = {
-      fecha: moment().format('YYYY-MM-DD'),
-      fecha_recoleccion: moment(fechaSelect).format('YYYY-MM-DD'),
+      id_recoleccion: parseInt(id_recoleccion),
+      fecha: moment().format("YYYY-MM-DD"),
+      fecha_recoleccion: moment(fechaSelect).format("YYYY-MM-DD"),
       ruta: rutaSelected,
       usuario: userLoggued?.id,
       compartimiento: compartimientoSelect,
@@ -156,23 +160,26 @@ function FormCompartimiento({
       fosfadata: data.fosfadata,
       almidon: data.almidon,
       prueba_suero: data.prueba_suero,
-      estado: estadoAnalisis
+      estado: estadoAnalisis,
     };
 
     await fetch(`${URL_BASE}/analisis/addAnalisis.php`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         item: {
-          ...body
-        }
-      })
+          ...body,
+        },
+      }),
     })
       .then((response) => {
-        console.log('response', response);
+        console.log("response", response);
         if (response.status === 400) {
           notifyError();
         } else {
-          notifySuccess('guardo');
+          notifySuccess("guardo");
+
+          getListAllRecolecciones(fechaSelect, true);
+          getListAnalisisById(parseInt(id_recoleccion));
         }
       })
       .catch((error) => {
@@ -185,12 +192,12 @@ function FormCompartimiento({
       <div className="inputs_fields">
         {FORM_FIELDS.map((field, index) => (
           <div key={index}>
-            {field.type === 'text' ? (
+            {field.type === "text" ? (
               <div className="input_field">
                 <div className="labels">
                   <div className="icon_field">{field.icon}</div>
 
-                  <label>{field.name.replaceAll('_', ' ')}</label>
+                  <label>{field.name.replaceAll("_", " ")}</label>
                 </div>
                 <input
                   type="number"
@@ -199,12 +206,12 @@ function FormCompartimiento({
                   disabled={analisisSelect}
                 />
               </div>
-            ) : field.type === 'radio' ? (
+            ) : field.type === "radio" ? (
               <div className="input_field_radio">
                 <div className="labels">
                   <div className="icon_field"> {field.icon}</div>
                   <label for={field.name}>
-                    {field.name.replaceAll('_', ' ')}
+                    {field.name.replaceAll("_", " ")}
                   </label>
                 </div>
                 <div className="options_radio">
@@ -224,7 +231,7 @@ function FormCompartimiento({
                 </div>
               </div>
             ) : (
-              field.type === 'free' && <div className="input_field_radio"></div>
+              field.type === "free" && <div className="input_field_radio"></div>
             )}
           </div>
         ))}
@@ -233,18 +240,18 @@ function FormCompartimiento({
       <div className="input_field observ">
         <div className="labels">
           <div className="icon_field">
-            {FORM_FIELDS.find((f) => f.name === 'observaciones').icon}
+            {FORM_FIELDS.find((f) => f.name === "observaciones").icon}
           </div>
           <label>
             {FORM_FIELDS.find(
-              (f) => f.name === 'observaciones'
-            ).name.replaceAll('_', ' ')}
+              (f) => f.name === "observaciones"
+            ).name.replaceAll("_", " ")}
           </label>
         </div>
         <textarea
           className="input_textarea"
           {...register(
-            FORM_FIELDS.find((f) => f.name === 'observaciones').name
+            FORM_FIELDS.find((f) => f.name === "observaciones").name
           )}
           disabled={analisisSelect}
         />
@@ -255,7 +262,7 @@ function FormCompartimiento({
           <button
             className="button-cancel"
             onClick={
-              isValid && handleSubmit((data) => onSubmit(data, 'rechazado'))
+              isValid && handleSubmit((data) => onSubmit(data, "rechazado"))
             }
             disabled={!isValid}
           >
@@ -264,7 +271,7 @@ function FormCompartimiento({
           <button
             className="button-ok"
             onClick={
-              isValid && handleSubmit((data) => onSubmit(data, 'aceptado'))
+              isValid && handleSubmit((data) => onSubmit(data, "aceptado"))
             }
             disabled={!isValid}
           >

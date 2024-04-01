@@ -17,7 +17,7 @@ function Index() {
   const [analisis, setAnalisis] = useState([]);
   const [ruta, setRuta] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [reporte, setReporte] = useState(1);
+  const [reporte, setReporte] = useState(userLoggued?.tipo === "2" ? 3 : 1);
 
   const onChangeDate = (dates) => {
     const [start, end] = dates;
@@ -28,8 +28,8 @@ function Index() {
   const getData = async (fecha) => {
     setLoading(true);
 
-    const fechaIni = moment(startDate).format('YYYY-MM-DD');
-    const fechaFin = moment(endDate).format('YYYY-MM-DD');
+    const fechaIni = moment(startDate).format("YYYY-MM-DD");
+    const fechaFin = moment(endDate).format("YYYY-MM-DD");
 
     setTimeout(async () => {
       try {
@@ -42,7 +42,7 @@ function Index() {
         setRecolecciones(response.data);
         setAnalisis(responseAnalisis.data);
       } catch (error) {
-        console.error('Error en la solicitud:', error);
+        console.error("Error en la solicitud:", error);
       }
 
       setLoading(false);
@@ -58,7 +58,7 @@ function Index() {
         ganadero_documento: item.ganadero_documento,
         ganadero: item.ganadero,
         ruta: item.ruta,
-        litros: 0
+        litros: 0,
       };
     }
     agrupados[key].litros += parseFloat(item.litros);
@@ -68,7 +68,7 @@ function Index() {
   const fechasUnicas = [...new Set(recolecciones?.map((item) => item.fecha))];
 
   const ganaderosUnicos = [
-    ...new Set(recolecciones?.map((item) => item.ganadero_id))
+    ...new Set(recolecciones?.map((item) => item.ganadero_id)),
   ];
 
   const data = [];
@@ -90,7 +90,7 @@ function Index() {
         acc[fecha] = totalPorGanadero[index];
         return acc;
       }, {}),
-      Total: totalPorGanadero.reduce((a, b) => a + b, 0)
+      Total: totalPorGanadero.reduce((a, b) => a + b, 0),
     };
     data.push(rowData);
   });
@@ -105,7 +105,7 @@ function Index() {
       conductor: item?.conductor,
       observaciones: item?.observaciones,
       litros: item?.litros,
-      precio_total: `$${item?.precio * item?.litros}`
+      precio_total: `$${item?.precio * item?.litros}`,
     };
 
     dataAll.push(rowData);
@@ -127,15 +127,15 @@ function Index() {
       Proteina: item?.proteina,
       Ciloscopia: item?.ciloscopia,
       Antibiotico: item?.antibiotico,
-      'Solidos No Grasos': item?.solidos_no_grasos,
-      'Solidos Totales': item?.solidos_totales,
+      "Solidos No Grasos": item?.solidos_no_grasos,
+      "Solidos Totales": item?.solidos_totales,
       Neutralizante: item?.neutralizante,
       Cloruros: item?.cloruros,
       Peroxido: item?.peroxido,
       Peroxdata: item?.peroxdata,
       Fosfadata: item?.fosfadata,
       Almidon: item?.almidon,
-      'Prueba Suero': item?.prueba_suero
+      "Prueba Suero": item?.prueba_suero,
     };
 
     dataAnalisis.push(rowData);
@@ -144,14 +144,14 @@ function Index() {
   const dataMap = {
     1: data,
     2: dataAll,
-    3: dataAnalisis
+    3: dataAnalisis,
   };
 
   const csvOptions = {
     filename: `tabla_reporte_${reporte}.csv`,
-    separator: ';',
+    separator: ";",
     data: dataMap[reporte] || [],
-    uFEFF: true
+    uFEFF: true,
   };
 
   const generarPDF = () => {
@@ -181,17 +181,17 @@ function Index() {
       const logoWidth = 30;
       const logoHeight = 20;
 
-      doc.addImage(logo, 'PNG', logoX, logoY, logoWidth, logoHeight);
+      doc.addImage(logo, "PNG", logoX, logoY, logoWidth, logoHeight);
 
       const getCenterX = (text) => {
         return doc.getTextWidth(text);
       };
 
       const headerTemplate = [
-        'Documento equivalente a factura, (art3 dec.522 de 2003) No.: PLGUL',
-        'ALIMENTOS PIPPO SAS',
-        'NIT 900.031.833-6',
-        'Responsable del IVA-Régimen Común'
+        "Documento equivalente a factura, (art3 dec.522 de 2003) No.: PLGUL",
+        "ALIMENTOS PIPPO SAS",
+        "NIT 900.031.833-6",
+        "Responsable del IVA-Régimen Común",
       ];
 
       headerTemplate.forEach((item, index) => {
@@ -209,18 +209,18 @@ function Index() {
 
       const data = [
         {
-          label: 'Persona natural de quien ',
-          value: ''
+          label: "Persona natural de quien ",
+          value: "",
         },
         {
-          label: 'se adquieren los bienes y/o servicios',
-          value: ganaderoInfo.ganadero
+          label: "se adquieren los bienes y/o servicios",
+          value: ganaderoInfo.ganadero,
         },
-        { label: 'Nit', value: ganaderoInfo.ganadero_documento },
+        { label: "Nit", value: ganaderoInfo.ganadero_documento },
         {
-          label: 'Ciudad y fecha de la operación',
-          value: `Guasca Cuad. ${moment().format('DD/MM/YYYY')}`
-        }
+          label: "Ciudad y fecha de la operación",
+          value: `Guasca Cuad. ${moment().format("DD/MM/YYYY")}`,
+        },
       ];
 
       data.forEach((item, index) => {
@@ -228,8 +228,8 @@ function Index() {
         const valueX = startX + colWidth;
         const y = startY + index * rowHeight;
 
-        doc.text(item.label, labelX, y).setFont(undefined, 'bold');
-        doc.text(item.value, valueX, y).setFont(undefined, 'normal');
+        doc.text(item.label, labelX, y).setFont(undefined, "bold");
+        doc.text(item.value, valueX, y).setFont(undefined, "normal");
       });
 
       const valorTotalQuincena = ganaderoData.reduce(
@@ -239,12 +239,12 @@ function Index() {
       );
 
       const headers = [
-        'Fecha',
-        'Litros',
-        'Valor Unitario',
-        'Valor Total',
-        'Descuento Fomento',
-        'Valor Total Día'
+        "Fecha",
+        "Litros",
+        "Valor Unitario",
+        "Valor Total",
+        "Descuento Fomento",
+        "Valor Total Día",
       ];
 
       const rows = ganaderoData.map(({ fecha, litros, precio }) => [
@@ -254,29 +254,29 @@ function Index() {
         parseInt(litros * precio),
         parseInt((litros * precio * 0.75) / 100),
         parseInt(litros * precio - (litros * precio * 0.75) / 100),
-        ''
+        "",
       ]);
 
-      rows.push(['', '', '', '', 'TOTAL', valorTotalQuincena]);
+      rows.push(["", "", "", "", "TOTAL", valorTotalQuincena]);
 
       doc.autoTable({
         startY: 70,
         head: [headers],
-        body: rows
+        body: rows,
       });
     });
 
-    doc.save('reporte.pdf');
+    doc.save("reporte.pdf");
   };
 
   const tabsByTypeUser = [
     {
       id: 1,
-      title: 'Reporte 1',
-      active: userLoggued?.tipo === '0'
+      title: "Reporte 1",
+      active: userLoggued?.tipo === "0",
     },
-    { id: 2, title: 'Reporte 2', active: userLoggued?.tipo === '0' },
-    { id: 3, title: 'Análisis', active: true }
+    { id: 2, title: "Reporte 2", active: userLoggued?.tipo === "0" },
+    { id: 3, title: "Análisis", active: true },
   ].filter((item) => item.active);
 
   const props = {
@@ -297,7 +297,7 @@ function Index() {
     generarPDF,
     analisis,
     tabsByTypeUser,
-    userLoggued
+    userLoggued,
   };
 
   return <View {...props} />;
