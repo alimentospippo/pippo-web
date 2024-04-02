@@ -1,14 +1,25 @@
-import React from 'react'
-import { FaStickyNote, FaRegFrown, FaSearch } from 'react-icons/fa'
-import { AiFillEdit, AiFillSave, AiOutlineClose, AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
-import DatePicker from 'react-datepicker'
-import Header from '../header'
-import { ToastContainer } from 'react-toastify'
+import React from "react";
+import {
+  FaStickyNote,
+  FaRegFrown,
+  FaSearch,
+  FaMapMarked,
+} from "react-icons/fa";
+import {
+  AiFillEdit,
+  AiFillSave,
+  AiOutlineClose,
+  AiOutlineCheckCircle,
+  AiOutlineCloseCircle,
+} from "react-icons/ai";
+import DatePicker from "react-datepicker";
+import Header from "../header";
+import { ToastContainer } from "react-toastify";
 
-import 'react-toastify/dist/ReactToastify.css'
-import './styles.scss'
+import "react-toastify/dist/ReactToastify.css";
+import "./styles.scss";
 
-function View ({
+function View({
   recoleccionesNew,
   getListAllRecolecciones,
   tableTemplate,
@@ -22,7 +33,8 @@ function View ({
   filterByGanadero,
   clearFilter,
   filter,
-  setFilter
+  setFilter,
+  goToMaps,
 }) {
   return (
     <div className="page recolecciones" id="full">
@@ -85,15 +97,26 @@ function View ({
                   <td>{item?.conductor}</td>
                   <td>
                     <div className="column-gps">
-                      {item?.gps === 'Invalido' ? (
+                      {!item?.gps_lat && !item?.gps_long ? (
                         <AiOutlineCloseCircle color="red" />
                       ) : (
                         <AiOutlineCheckCircle color="green" />
-                      )}{' '}
-                      <div className={`column-gps-${item?.gps?.toLowerCase()}`}>
-                        {item?.gps}
-                      </div>{' '}
-                    </div>{' '}
+                      )}
+                      {item?.gps_lat && item?.gps_long && (
+                        <div className="go_to_map">
+                          <button
+                            onClick={() =>
+                              goToMaps({
+                                lat: item?.gps_lat,
+                                long: item?.gps_long,
+                              })
+                            }
+                          >
+                            <FaMapMarked />
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </td>
                   <td>{item?.observaciones}</td>
                   <td className="column-litros">
@@ -146,4 +169,4 @@ function View ({
   );
 }
 
-export default View
+export default View;

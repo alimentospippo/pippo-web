@@ -22,6 +22,10 @@
     }
   }
 
+  .go_to_map {
+    cursor: pointer;
+  }
+
   .select-ganadero {
     width: 167px;
     font-size: 12px;
@@ -42,19 +46,19 @@
     padding: 40px;
   }
 
-    .column-gps {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-  
-      &-invalido {
-        color: red;
-      }
-  
-      &-valido {
-        color: green;
-      }
+  .column-gps {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &-invalido {
+      color: red;
     }
+
+    &-valido {
+      color: green;
+    }
+  }
   .column-litros {
     display: flex;
     align-items: center;
