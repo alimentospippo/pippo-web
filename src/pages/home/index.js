@@ -15,7 +15,7 @@ function Index() {
     const totalXRuta = ganaderos?.filter((g) => g.ruta === rutaId)?.length || 1;
     const totalXRecoleccion =
       recolecciones?.filter((r) => r.ruta_id === rutaId)?.length || 0;
-
+    console.log(totalXRecoleccion, totalXRuta);
     return Math.floor((totalXRecoleccion / totalXRuta) * 100);
   };
 
