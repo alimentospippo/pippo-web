@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { URL_BASE } from "../../constants";
 import { toast } from "react-toastify";
@@ -120,10 +120,13 @@ function FormCompartimiento({
     setValue,
   } = useForm();
 
+  const [isEdit, setIsEdit] = useState(false);
+
   useEffect(() => {
     if (analisisSelect) {
+      setIsEdit(userLoggued?.tipo === "3");
       Object.keys(analisisSelect).forEach((key) => {
-        setValue(key, analisisSelect[key]);
+        setValue(key, analisisSelect[key], { shouldValidate: true });
       });
     } else {
       FORM_FIELDS.forEach((field) => {
@@ -132,7 +135,7 @@ function FormCompartimiento({
     }
   }, [analisisSelect, setValue]);
 
-  const onSubmit = async (data, estadoAnalisis) => {
+  const onSubmit = async (data, estadoAnalisis, toUpdate) => {
     const body = {
       id_recoleccion: parseInt(id_recoleccion),
       fecha: moment().format("YYYY-MM-DD"),
@@ -163,28 +166,51 @@ function FormCompartimiento({
       estado: estadoAnalisis,
     };
 
-    await fetch(`${URL_BASE}/analisis/addAnalisis.php`, {
-      method: "POST",
-      body: JSON.stringify({
-        item: {
-          ...body,
-        },
-      }),
-    })
-      .then((response) => {
-        console.log("response", response);
-        if (response.status === 400) {
-          notifyError();
-        } else {
-          notifySuccess("guardo");
-
-          getListAllRecolecciones(fechaSelect, true);
-          getListAnalisisById(parseInt(id_recoleccion));
-        }
+    if (toUpdate) {
+      await fetch(`${URL_BASE}/analisis/updateAnalisis.php`, {
+        method: "PUT",
+        body: JSON.stringify({
+          item: {
+            ...body,
+          },
+        }),
       })
-      .catch((error) => {
-        notifyError();
-      });
+        .then((response) => {
+          if (response.status === 400) {
+            notifyError();
+          } else {
+            notifySuccess("guardo");
+
+            getListAllRecolecciones(fechaSelect, true);
+            getListAnalisisById(parseInt(id_recoleccion));
+          }
+        })
+        .catch((error) => {
+          notifyError();
+        });
+    } else {
+      await fetch(`${URL_BASE}/analisis/addAnalisis.php`, {
+        method: "POST",
+        body: JSON.stringify({
+          item: {
+            ...body,
+          },
+        }),
+      })
+        .then((response) => {
+          if (response.status === 400) {
+            notifyError();
+          } else {
+            notifySuccess("guardo");
+
+            getListAllRecolecciones(fechaSelect, true);
+            getListAnalisisById(parseInt(id_recoleccion));
+          }
+        })
+        .catch((error) => {
+          notifyError();
+        });
+    }
   };
 
   return (
@@ -196,14 +222,13 @@ function FormCompartimiento({
               <div className="input_field">
                 <div className="labels">
                   <div className="icon_field">{field.icon}</div>
-
                   <label>{field.name.replaceAll("_", " ")}</label>
                 </div>
                 <input
                   type="number"
                   min={0}
                   {...register(field.name, { required: true })}
-                  disabled={analisisSelect}
+                  disabled={!isEdit}
                 />
               </div>
             ) : field.type === "radio" ? (
@@ -223,7 +248,7 @@ function FormCompartimiento({
                         name={field.name}
                         value={option.name}
                         {...register(field.name, { required: true })}
-                        disabled={analisisSelect}
+                        disabled={!isEdit}
                       />
                       <label>{option.name}</label>
                     </div>
@@ -253,7 +278,7 @@ function FormCompartimiento({
           {...register(
             FORM_FIELDS.find((f) => f.name === "observaciones").name
           )}
-          disabled={analisisSelect}
+          disabled={!isEdit}
         />
       </div>
 
@@ -278,6 +303,17 @@ function FormCompartimiento({
             Aceptado
           </button>
         </div>
+      )}
+      {isEdit && (
+        <button
+          className="button-ok"
+          onClick={
+            isValid && handleSubmit((data) => onSubmit(data, "update", true))
+          }
+          disabled={!isValid}
+        >
+          Actualizar
+        </button>
       )}
     </form>
   );

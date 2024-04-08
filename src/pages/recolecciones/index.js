@@ -31,14 +31,11 @@ function Index() {
   };
 
   const getListAllRecolecciones = async (fecha) => {
-    console.log("fecha", fecha);
     setFechaSelect(fecha);
     setIsLoading(true);
 
     const momentDate = moment(fecha);
     const formattedDate = momentDate.format("YYYY-MM-DD");
-
-    console.log("formattedDate", formattedDate);
 
     setTimeout(async () => {
       try {
@@ -63,6 +60,7 @@ function Index() {
   const tableTemplate = [
     "Id",
     "Fecha",
+    "Hora",
     "Ruta",
     "Ganadero",
     "Conductor",

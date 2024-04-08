@@ -92,6 +92,7 @@ function View({
                 <tr key={item?.id}>
                   <td>{item?.id}</td>
                   <td>{item?.fecha}</td>
+                  <td>{item?.hora}</td>
                   <td>{item?.ruta}</td>
                   <td>{item?.ganadero}</td>
                   <td>{item?.conductor}</td>
