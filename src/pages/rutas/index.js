@@ -127,38 +127,43 @@ function Index() {
     },
   ];
 
-  const [ganaderosOrder, setGanaderosOrder] = useState(ganaderos);
+  const [ganaderosOrder, setGanaderosOrder] = useState([]);
 
   useEffect(() => {
-    setGanaderosOrder(ganaderos?.filter((g) => g.ruta === dataModal?.id));
-  }, [dataModal]);
+    const filteredGanaderos = ganaderos?.filter(
+      (g) => g.ruta === dataModal?.id
+    );
 
-  const upOrder = (id) => {
+    filteredGanaderos?.sort((a, b) => parseInt(a.orden) - parseInt(b.orden));
+
+    filteredGanaderos?.forEach((ganadero, index) => {
+      ganadero.orden = index;
+    });
+
+    setGanaderosOrder(filteredGanaderos);
+  }, [dataModal, ganaderos]);
+
+  const updateOrderGanaderos = (id, direction) => {
     const index = ganaderosOrder.findIndex((ganadero) => ganadero.id === id);
+    const newOrder = [...ganaderosOrder];
 
-    if (index > 0) {
-      const newOrder = [...ganaderosOrder];
-      [newOrder[index].orden, newOrder[index - 1].orden] = [
-        newOrder[index - 1].orden,
-        newOrder[index].orden,
-      ];
-
-      setGanaderosOrder(newOrder);
-    }
-  };
-
-  const downOrder = (id) => {
-    const index = ganaderosOrder.findIndex((ganadero) => ganadero.id === id);
-
-    if (index < ganaderosOrder.length - 1) {
-      const newOrder = [...ganaderosOrder];
+    if (
+      index >= 0 &&
+      index < ganaderosOrder.length - 1 &&
+      direction === "down"
+    ) {
       [newOrder[index].orden, newOrder[index + 1].orden] = [
         newOrder[index + 1].orden,
         newOrder[index].orden,
       ];
-
-      setGanaderosOrder(newOrder);
+    } else if (index > 0 && direction === "up") {
+      [newOrder[index].orden, newOrder[index - 1].orden] = [
+        newOrder[index - 1].orden,
+        newOrder[index].orden,
+      ];
     }
+
+    setGanaderosOrder(newOrder);
   };
 
   const updateOrder = () => {
@@ -197,8 +202,7 @@ function Index() {
     isValid,
     modalByGanaderos,
     setModalByGanaderos,
-    upOrder,
-    downOrder,
+    updateOrderGanaderos,
     ganaderosOrder,
     updateOrder,
   };

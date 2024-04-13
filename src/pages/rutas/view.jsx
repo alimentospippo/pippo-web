@@ -29,8 +29,7 @@ function View({
   isValid,
   modalByGanaderos,
   setModalByGanaderos,
-  upOrder,
-  downOrder,
+  updateOrderGanaderos,
   ganaderosOrder,
   updateOrder,
 }) {
@@ -45,7 +44,7 @@ function View({
             className="add"
             onClick={() => {
               setIsModalOpen(!isModalOpen);
-              setDataModal({ type: 'Agregar' });
+              setDataModal({ type: "Agregar" });
             }}
           >
             <FaPlus />
@@ -93,7 +92,7 @@ function View({
                         className="item"
                         onClick={() => {
                           setIsModalOpen(!isModalOpen);
-                          setDataModal({ ...ruta, type: 'Modificar' });
+                          setDataModal({ ...ruta, type: "Modificar" });
                         }}
                       >
                         <AiFillEdit />
@@ -163,6 +162,7 @@ function View({
               <table className="tabla">
                 <thead>
                   <tr>
+                    <th></th>
                     <th>Orden</th>
                     <th>Documento</th>
                     <th>Nombre</th>
@@ -175,16 +175,27 @@ function View({
                     ?.map((ganadero, index) => (
                       <tr key={index}>
                         <td>
-                          <AiOutlineCaretUp
-                            cursor={'pointer'}
-                            onClick={() => upOrder(ganadero.id)}
-                          />
+                          <div className="up-down">
+                            {index > 0 && (
+                              <AiOutlineCaretUp
+                                cursor={"pointer"}
+                                onClick={() =>
+                                  updateOrderGanaderos(ganadero.id, "up")
+                                }
+                              />
+                            )}
 
-                          <AiOutlineCaretDown
-                            cursor={'pointer'}
-                            onClick={() => downOrder(ganadero.id)}
-                          />
+                            {ganaderosOrder.length !== index + 1 && (
+                              <AiOutlineCaretDown
+                                cursor={"pointer"}
+                                onClick={() =>
+                                  updateOrderGanaderos(ganadero.id, "down")
+                                }
+                              />
+                            )}
+                          </div>
                         </td>
+                        <td>{ganadero?.orden}</td>
                         <td>{ganadero?.documento}</td>
                         <td>{ganadero?.nombre}</td>
                         <td>{ganadero?.promedio} lts</td>
