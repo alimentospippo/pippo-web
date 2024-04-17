@@ -74,10 +74,7 @@ function RoutesJS() {
       path: "/analisis",
       element: <Analisis />,
       icon: <FaMicroscope />,
-      active:
-        userLoggued?.tipo === "0" ||
-        userLoggued?.tipo === "2" ||
-        userLoggued?.tipo === "3",
+      active: true,
     },
     {
       id: 7,
@@ -85,7 +82,7 @@ function RoutesJS() {
       path: "/exportar",
       element: <Exportar />,
       icon: <RiFileExcel2Fill />,
-      active: userLoggued?.tipo === "0" || userLoggued?.tipo === "2",
+      active: true,
     },
   ].filter((nav) => nav.active);
   return (
