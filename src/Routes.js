@@ -74,7 +74,10 @@ function RoutesJS() {
       path: "/analisis",
       element: <Analisis />,
       icon: <FaMicroscope />,
-      active: userLoggued?.tipo === "0" || userLoggued?.tipo === "2",
+      active:
+        userLoggued?.tipo === "0" ||
+        userLoggued?.tipo === "2" ||
+        userLoggued?.tipo === "3",
     },
     {
       id: 7,

@@ -121,10 +121,17 @@ function FormCompartimiento({
   } = useForm();
 
   const [isEdit, setIsEdit] = useState(false);
+  const [isEditor, setIsEditor] = useState(false);
+
+  console.log("userLoggued", userLoggued);
+  console.log("isEdit", isEdit);
+  console.log("isEditor", isEditor);
 
   useEffect(() => {
-    if (analisisSelect) {
-      setIsEdit(userLoggued?.tipo === "3");
+    setIsEditor(parseInt(userLoggued?.tipo === 3));
+    console.log("analisisSelect", analisisSelect);
+    if (analisisSelect?.estado) {
+      setIsEdit(analisisSelect?.estado);
       Object.keys(analisisSelect).forEach((key) => {
         setValue(key, analisisSelect[key], { shouldValidate: true });
       });
@@ -228,7 +235,7 @@ function FormCompartimiento({
                   type="number"
                   min={0}
                   {...register(field.name, { required: true })}
-                  disabled={!isEdit}
+                  disabled={!isEditor || analisisSelect?.estado}
                 />
               </div>
             ) : field.type === "radio" ? (
@@ -248,7 +255,7 @@ function FormCompartimiento({
                         name={field.name}
                         value={option.name}
                         {...register(field.name, { required: true })}
-                        disabled={!isEdit}
+                        disabled={!isEditor || analisisSelect?.estado}
                       />
                       <label>{option.name}</label>
                     </div>
@@ -278,33 +285,36 @@ function FormCompartimiento({
           {...register(
             FORM_FIELDS.find((f) => f.name === "observaciones").name
           )}
-          disabled={!isEdit}
+          disabled={!isEditor || analisisSelect?.estado}
         />
       </div>
 
-      {!analisisSelect && (
-        <div className="button_content">
-          <button
-            className="button-cancel"
-            onClick={
-              isValid && handleSubmit((data) => onSubmit(data, "rechazado"))
-            }
-            disabled={!isValid}
-          >
-            Rechazado
-          </button>
-          <button
-            className="button-ok"
-            onClick={
-              isValid && handleSubmit((data) => onSubmit(data, "aceptado"))
-            }
-            disabled={!isValid}
-          >
-            Aceptado
-          </button>
-        </div>
-      )}
-      {isEdit && (
+      {(parseInt(userLoggued?.tipo) === 2 ||
+        parseInt(userLoggued?.tipo) === 3 ||
+        parseInt(userLoggued?.tipo) === 0) &&
+        !analisisSelect?.estado && (
+          <div className="button_content">
+            <button
+              className="button-cancel"
+              onClick={
+                isValid && handleSubmit((data) => onSubmit(data, "rechazado"))
+              }
+              disabled={!isValid}
+            >
+              Rechazado
+            </button>
+            <button
+              className="button-ok"
+              onClick={
+                isValid && handleSubmit((data) => onSubmit(data, "aceptado"))
+              }
+              disabled={!isValid}
+            >
+              Aceptado
+            </button>
+          </div>
+        )}
+      {isEditor && analisisSelect?.estado && (
         <button
           className="button-ok"
           onClick={

@@ -91,7 +91,7 @@ function Index() {
     return (
       analisisNew?.find(
         (a) => parseInt(a.compartimiento) === parseInt(compartimientoSelect)
-      ) || null
+      ) || []
     );
   };
 

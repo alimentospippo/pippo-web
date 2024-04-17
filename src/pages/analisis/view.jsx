@@ -136,7 +136,7 @@ function View({
                     moment(fechaSelect).format("YYYY-MM-DD")}
                 </div>
                 <div>Compartimiento: {compartimientoSelect}</div>
-                <div>Analista: {userLoggued?.usuario} </div>
+                <div>Analista: {userLoggued?.nombre} </div>
                 <div className="status_analisis">
                   <div>Estado:</div>
                   <div
