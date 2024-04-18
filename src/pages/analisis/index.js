@@ -72,32 +72,25 @@ function Index() {
 
   const calculateCompartimiento = () => {
     const compartimientos = [];
-    const compartimientosRuta =
-      rutas?.find((r) => r.id === recoleccionSelect?.ruta_id)
-        ?.compartimientos || 0;
 
-    if (compartimientosRuta > 0) {
-      for (let i = 1; i <= compartimientosRuta; i++) {
-        compartimientos.push(`Compartimiento ${i}`);
-      }
-    } else {
-      compartimientos.push("Compartimiento 1");
+    for (let i = 1; i <= 3; i++) {
+      compartimientos.push(`Compartimiento ${i}`);
     }
 
     return compartimientos;
   };
 
-  const getDataAnalisisCompartimiento = () => {
-    return (
-      analisisNew?.find(
-        (a) => parseInt(a.compartimiento) === parseInt(compartimientoSelect)
-      ) || []
-    );
-  };
+  const [analisisFormData, setAnalisisFormData] = useState({});
 
   useEffect(() => {
-    analisisNew && getDataAnalisisCompartimiento();
-  }, [analisisNew]);
+    if (analisisNew && compartimientoSelect) {
+      const filteredAnalisis = analisisNew.find(
+        (a) => parseInt(a.compartimiento) === parseInt(compartimientoSelect)
+      );
+
+      setAnalisisFormData(filteredAnalisis);
+    }
+  }, [analisisNew, compartimientoSelect]);
 
   const props = {
     recoleccionesNew,
@@ -113,7 +106,7 @@ function Index() {
     isLoadingAnalisis,
     recoleccionSelect,
     setRecoleccionSelect,
-    getDataAnalisisCompartimiento,
+    analisisFormData,
   };
   return <View {...props} />;
 }

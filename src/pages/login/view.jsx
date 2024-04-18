@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.scss";
 
-function View({ user, setUser, password, setPassword, login }) {
+function View({ user, setUser, password, setPassword, login, loadingLogin }) {
   return (
     <div className=" login" id="full">
       <div className="login-content">
@@ -27,9 +27,14 @@ function View({ user, setUser, password, setPassword, login }) {
           <button
             className="button"
             onClick={() => login()}
-            disabled={!user || !password}
+            disabled={!user || !password || loadingLogin}
           >
-            Aceptar
+            <div className="button-content">
+              {loadingLogin && (
+                <div className="icon-loading">{icons("loading")}</div>
+              )}
+              <div>{loadingLogin ? "Iniciando..." : "Iniciar"}</div>
+            </div>
           </button>
         </div>
       </div>

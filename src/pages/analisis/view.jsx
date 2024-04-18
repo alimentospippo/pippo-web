@@ -19,7 +19,7 @@ function View({
   setCompartimientoSelect,
   userLoggued,
   calculateCompartimiento,
-  getDataAnalisisCompartimiento,
+  analisisFormData,
   getListAnalisisById,
   isLoadingAnalisis,
   recoleccionSelect,
@@ -127,12 +127,11 @@ function View({
                 </div>
                 <div>
                   Fecha analisis:{" "}
-                  {getDataAnalisisCompartimiento()?.fecha ||
-                    moment().format("YYYY-MM-DD")}
+                  {analisisFormData?.fecha || moment().format("YYYY-MM-DD")}
                 </div>
                 <div>
                   Fecha recoleccion:{" "}
-                  {getDataAnalisisCompartimiento()?.fecha_recoleccion ||
+                  {analisisFormData?.fecha_recoleccion ||
                     moment(fechaSelect).format("YYYY-MM-DD")}
                 </div>
                 <div>Compartimiento: {compartimientoSelect}</div>
@@ -141,21 +140,22 @@ function View({
                   <div>Estado:</div>
                   <div
                     className={`pill_status ${
-                      getDataAnalisisCompartimiento()?.estado || "pendiente"
+                      analisisFormData?.estado || "pendiente"
                     }`}
                   >
-                    {getDataAnalisisCompartimiento()?.estado || "Pendiente"}
+                    {analisisFormData?.estado || "Pendiente"}
                   </div>
                 </div>
               </div>
               <div className="form_analisis">
                 <FormCompartimiento
-                  analisisSelect={getDataAnalisisCompartimiento()}
+                  analisisSelect={analisisFormData}
                   fechaSelect={fechaSelect}
                   userLoggued={userLoggued}
                   compartimientoSelect={compartimientoSelect}
                   id_recoleccion={recoleccionSelect?.id}
                   rutaSelected={recoleccionSelect?.ruta_id}
+                  fechaRecoleccion={recoleccionSelect?.fecha}
                   getListAllRecolecciones={getListAllRecolecciones}
                   getListAnalisisById={getListAnalisisById}
                 />

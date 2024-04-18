@@ -11,7 +11,10 @@ function Index() {
 
   const { setUserLoggued, setLogin } = useContextoPippo();
 
+  const [loadingLogin, setLoadingLogin] = useState(false);
+
   const login = async () => {
+    setLoadingLogin(true);
     await fetch(`${URL_BASE}/login/login.php`, {
       method: "POST",
       body: JSON.stringify({
@@ -30,9 +33,10 @@ function Index() {
           notifyError();
         }
       });
+    setLoadingLogin(false);
   };
 
-  const props = { user, setUser, password, setPassword, login };
+  const props = { user, setUser, password, setPassword, login, loadingLogin };
 
   return <View {...props} />;
 }

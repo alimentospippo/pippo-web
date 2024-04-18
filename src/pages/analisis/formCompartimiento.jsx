@@ -37,6 +37,7 @@ function FormCompartimiento({
   id_recoleccion,
   getListAllRecolecciones,
   getListAnalisisById,
+  fechaRecoleccion,
 }) {
   const notifySuccess = (message) => toast.success(`Se ${message} el analisis`);
   const notifyError = () => toast.error("Error, intente de nuevo");
@@ -136,11 +137,14 @@ function FormCompartimiento({
     }
   }, [analisisSelect, setValue]);
 
+  console.log("analisisSelect", analisisSelect);
+
   const onSubmit = async (data, estadoAnalisis, toUpdate) => {
     const body = {
+      ...(toUpdate && { id: analisisSelect.analisis_id }),
       id_recoleccion: parseInt(id_recoleccion),
       fecha: moment().format("YYYY-MM-DD"),
-      fecha_recoleccion: moment(fechaSelect).format("YYYY-MM-DD"),
+      fecha_recoleccion: moment(fechaRecoleccion).format("YYYY-MM-DD"),
       ruta: rutaSelected,
       usuario: userLoggued?.id,
       compartimiento: compartimientoSelect,
@@ -153,7 +157,7 @@ function FormCompartimiento({
       densidad: data.densidad,
       grasa: data.grasa,
       proteina: data.proteina,
-      ciloscopia: data.crioscopia,
+      crioscopia: data.crioscopia,
       antibiotico: data.antibiotico,
       solidos_no_grasos: data.solidos_no_grasos,
       solidos_totales: data.solidos_totales,
@@ -164,54 +168,35 @@ function FormCompartimiento({
       fosfadata: data.fosfadata,
       almidon: data.almidon,
       prueba_suero: data.prueba_suero,
-      estado: estadoAnalisis,
+      estado: analisisSelect?.estado ?? estadoAnalisis,
     };
 
-    if (toUpdate) {
-      await fetch(`${URL_BASE}/analisis/updateAnalisis.php`, {
-        method: "PUT",
-        body: JSON.stringify({
-          item: {
-            ...body,
-          },
-        }),
-      })
-        .then((response) => {
-          if (response.status === 400) {
-            notifyError();
-          } else {
-            notifySuccess("guardo");
+    console.log("body", body);
 
-            getListAllRecolecciones(fechaSelect, true);
-            getListAnalisisById(parseInt(id_recoleccion));
-          }
-        })
-        .catch((error) => {
-          notifyError();
-        });
-    } else {
-      await fetch(`${URL_BASE}/analisis/addAnalisis.php`, {
+    await fetch(
+      `${URL_BASE}/analisis/${toUpdate ? "update" : "add"}Analisis.php`,
+      {
         method: "POST",
         body: JSON.stringify({
           item: {
             ...body,
           },
         }),
-      })
-        .then((response) => {
-          if (response.status === 400) {
-            notifyError();
-          } else {
-            notifySuccess("guardo");
-
-            getListAllRecolecciones(fechaSelect, true);
-            getListAnalisisById(parseInt(id_recoleccion));
-          }
-        })
-        .catch((error) => {
+      }
+    )
+      .then((response) => {
+        if (response.status === 400) {
           notifyError();
-        });
-    }
+        } else {
+          notifySuccess(toUpdate ? "actualizo" : "guardo");
+
+          getListAllRecolecciones(fechaSelect, true);
+          getListAnalisisById(parseInt(id_recoleccion));
+        }
+      })
+      .catch((error) => {
+        notifyError();
+      });
   };
 
   return (

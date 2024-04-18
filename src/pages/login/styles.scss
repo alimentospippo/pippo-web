@@ -41,3 +41,13 @@
     width: 100%;
   }
 }
+.button-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  .icon-loading {
+    width: 20px;
+  }
+}
