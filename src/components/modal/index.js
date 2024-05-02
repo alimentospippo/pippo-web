@@ -2,7 +2,7 @@ import React from "react";
 import { FaTimes } from "react-icons/fa";
 import "./styles.scss";
 
-function Index({ children, isOpen, onClose, title, actions }) {
+function Index({ children, isOpen, onClose, title, actions, footerActions }) {
   if (!isOpen) {
     return null;
   }
@@ -24,6 +24,15 @@ function Index({ children, isOpen, onClose, title, actions }) {
           </div>
         </div>
         <div className="children">{children}</div>
+        {footerActions && (
+          <div className="footer-actions">
+            {footerActions.map((f) => (
+              <button className={f.className} onClick={() => f.action()}>
+                {f.title}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

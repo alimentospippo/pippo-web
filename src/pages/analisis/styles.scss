@@ -196,4 +196,29 @@
   .pill_status.rechazado {
     background-color: #c90000;
   }
+
+  .plus {
+    gap: 7px;
+    width: fit-content;
+    max-width: fit-content;
+  }
+  .date-add {
+    display: flex;
+    gap: 10px;
+  }
+  .add_label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    align-items: center;
+
+    input,
+    select {
+      width: 50%;
+    }
+
+    select {
+      text-transform: capitalize;
+    }
+  }
 }

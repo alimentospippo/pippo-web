@@ -34,4 +34,10 @@
   .children {
     padding: 20px 40px;
   }
+  .footer-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 0px 40px 20px 40px;
+  }
 }

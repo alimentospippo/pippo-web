@@ -4,9 +4,13 @@ import View from "./view";
 import axios from "axios";
 import { URL_BASE } from "../../constants";
 import { useContextoPippo } from "../../ContextoPippo";
+import { toast } from "react-toastify";
 
 function Index() {
-  const { recolecciones, userLoggued, rutas } = useContextoPippo();
+  const { userLoggued, rutas, conductores } = useContextoPippo();
+
+  const notifySuccess = (message) => toast.success(`Se ${message} el analisis`);
+  const notifyError = () => toast.error("Error, intente de nuevo");
 
   const [recoleccionesNew, setRecoleccionesNew] = useState([]);
   const [analisisNew, setAnalisisNew] = useState([]);
@@ -57,8 +61,8 @@ function Index() {
   };
 
   useEffect(() => {
-    setFechaSelect(new Date());
-    setRecoleccionesNew(recolecciones);
+    setFechaSelect(moment().format("YYYY-MM-DD"));
+    getListAllRecolecciones(moment().format("YYYY-MM-DD"));
   }, []);
 
   const tableTemplate = [
@@ -92,6 +96,53 @@ function Index() {
     }
   }, [analisisNew, compartimientoSelect]);
 
+  const [modalAddAnalisis, setModalAddAnalisis] = useState(false);
+  const [formCreateAnalisis, setFormCreateAnalisis] = useState({
+    fecha: moment().format("YYYY-MM-DD"),
+    ruta: 1,
+    conductor: 13,
+    litros: 0,
+  });
+
+  console.log("formCreateAnalisis", formCreateAnalisis);
+
+  const actualizarEstado = (nuevosValores) => {
+    setFormCreateAnalisis((prevState) => ({
+      ...prevState,
+      ...nuevosValores,
+    }));
+  };
+
+  const handleInputChange = (name, value) => {
+    actualizarEstado({
+      [name]: value,
+    });
+  };
+
+  const createAnalisis = async () => {
+    const body = formCreateAnalisis;
+
+    await fetch(`${URL_BASE}/analisis/createAnalisis.php`, {
+      method: "POST",
+      body: JSON.stringify({
+        item: {
+          ...body,
+        },
+      }),
+    })
+      .then((response) => {
+        if (response.status === 400) {
+          notifyError();
+        } else {
+          notifySuccess("guardo");
+          getListAllRecolecciones(fechaSelect);
+        }
+      })
+      .catch((error) => {
+        notifyError();
+      });
+  };
+
   const props = {
     recoleccionesNew,
     getListAllRecolecciones,
@@ -107,6 +158,13 @@ function Index() {
     recoleccionSelect,
     setRecoleccionSelect,
     analisisFormData,
+    rutas,
+    conductores,
+    formCreateAnalisis,
+    handleInputChange,
+    modalAddAnalisis,
+    setModalAddAnalisis,
+    createAnalisis,
   };
   return <View {...props} />;
 }
