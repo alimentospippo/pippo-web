@@ -138,47 +138,19 @@ function View({
                 </div>
               ))}
             </div>
-            <div>
-              <div className="comp_title">
-                <div className="ruta_select">
-                  {`Ruta: ${recoleccionSelect?.ruta?.toUpperCase()}`}
-                </div>
-                <div>
-                  Fecha analisis:{" "}
-                  {analisisFormData?.fecha || moment().format("YYYY-MM-DD")}
-                </div>
-                <div>
-                  Fecha recoleccion:{" "}
-                  {analisisFormData?.fecha_recoleccion ||
-                    moment(fechaSelect).format("YYYY-MM-DD")}
-                </div>
-                <div>Compartimiento: {compartimientoSelect}</div>
-                <div>Analista: {userLoggued?.nombre} </div>
-                <div className="status_analisis">
-                  <div>Estado:</div>
-                  <div
-                    className={`pill_status ${
-                      analisisFormData?.estado || "pendiente"
-                    }`}
-                  >
-                    {analisisFormData?.estado || "Pendiente"}
-                  </div>
-                </div>
-              </div>
-              <div className="form_analisis">
-                <FormCompartimiento
-                  analisisSelect={analisisFormData}
-                  fechaSelect={fechaSelect}
-                  userLoggued={userLoggued}
-                  compartimientoSelect={compartimientoSelect}
-                  id_recoleccion={recoleccionSelect?.id}
-                  rutaSelected={recoleccionSelect?.ruta_id}
-                  fechaRecoleccion={recoleccionSelect?.fecha}
-                  getListAllRecolecciones={getListAllRecolecciones}
-                  getListAnalisisById={getListAnalisisById}
-                />
-              </div>
-            </div>
+
+            <FormCompartimiento
+              analisisSelect={analisisFormData}
+              fechaSelect={fechaSelect}
+              userLoggued={userLoggued}
+              compartimientoSelect={compartimientoSelect}
+              id_recoleccion={recoleccionSelect?.id}
+              rutaSelected={recoleccionSelect?.ruta_id}
+              fechaRecoleccion={recoleccionSelect?.fecha}
+              recoleccionSelect={recoleccionSelect}
+              getListAllRecolecciones={getListAllRecolecciones}
+              getListAnalisisById={getListAnalisisById}
+            />
           </div>
         )
       )}

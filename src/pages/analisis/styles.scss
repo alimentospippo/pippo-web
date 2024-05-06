@@ -94,13 +94,14 @@
     align-items: center;
     gap: 5px;
   }
+  .comp_title {
+    margin-bottom: 20px;
+  }
   .form_analisis {
-    margin-top: 40px;
-
     .inputs_fields {
       display: flex;
       flex-flow: wrap;
-      gap: 40px;
+      gap: 25px;
     }
 
     .form_main {
@@ -112,15 +113,50 @@
     .input_field {
       display: flex;
       flex-direction: column;
-      width: 150px;
+      width: 152px;
 
       input {
         text-align: right;
+        border-color: #000000;
+        color: #000000;
+        font-weight: bold;
+      }
+      input:read-only {
+        background-color: #cccccc75;
+        border-color: #cccccc75;
+        cursor: default;
+      }
+
+      .input-ok {
+        border-left-color: green;
+        border-left-width: 2px;
+      }
+      .input-error {
+        border-left-color: red;
+        border-left-width: 2px;
+      }
+
+      .range {
+        font-size: 9px;
+        font-weight: normal;
       }
 
       .input_textarea {
         height: 100px;
         resize: "none";
+        border-color: #000000;
+        color: #000000;
+      }
+      .input_textarea_anot {
+        font-size: 12px;
+        .params_title {
+          font-weight: bold;
+          margin-bottom: 5px;
+        }
+        .params {
+          display: flex;
+          flex-direction: column;
+        }
       }
 
       label {
@@ -131,7 +167,7 @@
     }
 
     .observ {
-      width: 340px;
+      flex: 1;
     }
 
     .button_content {
@@ -220,5 +256,9 @@
     select {
       text-transform: capitalize;
     }
+  }
+  .observaciones {
+    display: flex;
+    gap: 20px;
   }
 }
