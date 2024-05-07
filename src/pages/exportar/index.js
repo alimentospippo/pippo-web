@@ -126,8 +126,8 @@ function Index() {
       Neutralizante: item?.neutralizante,
       Cloruros: item?.cloruros,
       Peroxido: item?.peroxido,
-      Peroxdata: item?.peroxdata,
-      Fosfadata: item?.fosfadata,
+      Peroxidasa: item?.peroxidasa,
+      Fosfatasa: item?.fosfatasa,
       Almidon: item?.almidon,
       "Prueba Suero": item?.prueba_suero,
     };

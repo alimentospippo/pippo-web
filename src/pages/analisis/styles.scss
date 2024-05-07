@@ -110,6 +110,18 @@
       gap: 40px;
     }
 
+    .fields_time {
+      height: 60px;
+
+      div:last-child {
+        margin-top: 12px;
+      }
+      div:first-child {
+        font-size: 13px;
+        font-weight: bold;
+      }
+    }
+
     .input_field {
       display: flex;
       flex-direction: column;

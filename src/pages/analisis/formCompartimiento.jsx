@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { URL_BASE } from "../../constants";
 import { toast } from "react-toastify";
 import { positivo_negativo, FORM_FIELDS } from "./constants";
@@ -21,19 +21,6 @@ function FormCompartimiento({
 }) {
   const notifySuccess = (message) => toast.success(`Se ${message} el analisis`);
   const notifyError = () => toast.error("Error, intente de nuevo");
-
-  /* const formMethods = useForm({
-    mode: "onChange",
-    defaultValues: {},
-  });
-
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    getValues,
-    formState: { isValid, errors, touchedFields, dirtyFields },
-  } = formMethods; */
 
   const [isEditor, setIsEditor] = useState(false);
 
@@ -62,16 +49,18 @@ function FormCompartimiento({
       neutralizante: data.neutralizante,
       cloruros: data.cloruros,
       peroxido: data.peroxido,
-      peroxdata: data.peroxdata,
-      fosfadata: data.fosfadata,
+      peroxidasa: data.peroxidasa,
+      fosfatasa: data.fosfatasa,
       almidon: data.almidon,
       prueba_suero: data.prueba_suero,
       estado: analisisSelect?.estado ?? estadoAnalisis,
+      hora_inicial: data.hora_inicial,
+      hora_final: data.hora_final,
     };
 
     console.log("body", body);
 
-    /*  await fetch(
+    await fetch(
       `${URL_BASE}/analisis/${toUpdate ? "update" : "add"}Analisis.php`,
       {
         method: "POST",
@@ -94,7 +83,7 @@ function FormCompartimiento({
       })
       .catch((error) => {
         notifyError();
-      }); */
+      });
   };
 
   const [values, setValues] = useState({});
@@ -116,15 +105,13 @@ function FormCompartimiento({
     });
   };
 
-  console.log("fieldsRange", fieldsRange);
-
   const calculateSolidosNoGrasos = (v) => {
     const formula = (v["densidad"] - 1) * 250 + 0.14 + 0.2 * v["grasa"];
     return formula.toFixed(1);
   };
 
   const calculateSolidosTotales = (v, SNG) => {
-    const formula = (SNG / 100) * v["grasa"];
+    const formula = SNG * v["grasa"];
     return formula.toFixed(1);
   };
 
@@ -187,12 +174,6 @@ function FormCompartimiento({
       });
     }
   }, [analisisSelect, compartimientoSelect]);
-  /* 
-  useEffect(() => {
-    
-  }, [compartimientoSelect]) */
-
-  console.log("values", values);
 
   const handleKeyDown = (event) => {
     const regex = /^[0-9.-]$/;
@@ -202,10 +183,25 @@ function FormCompartimiento({
     }
   };
 
-  const isValid = Object.keys(values).length === 19 ? true : false;
+  const camposCoincidentes = FORM_FIELDS.filter((f) => f.required).filter(
+    (field) => values.hasOwnProperty(field.name)
+  );
+
+  const isValid =
+    camposCoincidentes.length === FORM_FIELDS.filter((f) => f.required).length;
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function calcTimeTotal() {
+    const formato = "HH:mm";
+    const momentoInicial = moment(values?.hora_inicial, formato);
+    const momentoFinal = moment(values?.hora_final, formato);
+
+    const diferenciaEnMinutos = momentoFinal.diff(momentoInicial, "minutes");
+
+    return diferenciaEnMinutos;
   }
 
   return (
@@ -258,6 +254,12 @@ function FormCompartimiento({
                   </div>
                 </div>
               )
+          )}
+          {values?.hora_inicial && values?.hora_final && (
+            <div className="fields_time">
+              <div>Tiempo Total:</div>
+              <div>{calcTimeTotal()} minutos</div>
+            </div>
           )}
         </div>
 
@@ -395,9 +397,7 @@ function FormCompartimiento({
           <div className="button_content">
             <button
               className="button-cancel"
-              /* onClick={
-                isValid && handleSubmit((data) => onSubmit(data, "rechazado"))
-              } */
+              onClick={() => onSubmit(values, "rechazado")}
               disabled={!isValid}
             >
               Rechazado
@@ -414,9 +414,7 @@ function FormCompartimiento({
         {isEditor && analisisSelect?.estado && (
           <button
             className="button-ok"
-            /* onClick={
-              isValid && handleSubmit((data) => onSubmit(data, "update", true))
-            } */
+            onClick={() => onSubmit(values, "update", true)}
             disabled={!isValid}
           >
             Actualizar

@@ -24,8 +24,8 @@ function Reporte3Analisis({ analisis }) {
     { title: "Neutralizante", row: "neutralizante" },
     { title: "Cloruros", row: "cloruros" },
     { title: "Peroxido", row: "peroxido" },
-    { title: "Peroxdata", row: "peroxdata" },
-    { title: "Fosfadata", row: "fosfadata" },
+    { title: "Peroxidasa", row: "peroxidasa" },
+    { title: "Fosfatasa", row: "fosfatasa" },
     { title: "Almidon", row: "almidon" },
     { title: "Prueba Suero", row: "prueba_suero" },
   ];

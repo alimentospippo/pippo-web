@@ -104,8 +104,6 @@ function Index() {
     litros: 0,
   });
 
-  console.log("formCreateAnalisis", formCreateAnalisis);
-
   const actualizarEstado = (nuevosValores) => {
     setFormCreateAnalisis((prevState) => ({
       ...prevState,
