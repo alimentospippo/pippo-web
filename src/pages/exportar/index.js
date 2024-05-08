@@ -17,7 +17,9 @@ function Index() {
   const [analisis, setAnalisis] = useState([]);
   const [ruta, setRuta] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [reporte, setReporte] = useState(userLoggued?.tipo === "2" ? 3 : 1);
+  const [reporte, setReporte] = useState(
+    userLoggued?.tipo === "2" || userLoggued?.tipo === "3" ? 3 : 1
+  );
 
   const getData = async (fecha) => {
     setLoading(true);

@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 function Reporte3Analisis({ analisis }) {
   const tableTemplate = [
@@ -8,16 +9,17 @@ function Reporte3Analisis({ analisis }) {
     { title: "Fecha Analisis", row: "fecha" },
     { title: "Compartimiento", row: "compartimiento" },
     { title: "Estado", row: "estado" },
-    { title: "Observaciones", row: "observaciones" },
     { title: "Silo", row: "silo" },
-    { title: "Temperatura", row: "temperatura" },
+    { title: "Hora Inicio", row: "hora_inicial" },
+    { title: "Hora Fin", row: "hora_final" },
+    { title: "TRAM", row: "tram" },
     { title: "Acidez", row: "acidez" },
     { title: "Alcohol", row: "alcohol" },
     { title: "pH", row: "ph" },
     { title: "Densidad", row: "densidad" },
     { title: "Grasa", row: "grasa" },
     { title: "Proteina", row: "proteina" },
-    { title: "Ciloscopia", row: "ciloscopia" },
+    { title: "Crioscopia", row: "crioscopia" },
     { title: "Antibiotico", row: "antibiotico" },
     { title: "Solidos No Grasos", row: "solidos_no_grasos" },
     { title: "Solidos Totales", row: "solidos_totales" },
@@ -28,10 +30,18 @@ function Reporte3Analisis({ analisis }) {
     { title: "Fosfatasa", row: "fosfatasa" },
     { title: "Almidon", row: "almidon" },
     { title: "Prueba Suero", row: "prueba_suero" },
+    { title: "Observaciones", row: "observaciones" },
   ];
 
-  let currentRoute = null;
-  let isEvenRouteGroup = true;
+  function calcTimeTotal(h_i, h_f) {
+    const formato = "HH:mm";
+    const momentoInicial = moment(h_i, formato);
+    const momentoFinal = moment(h_f, formato);
+
+    const diferenciaEnMinutos = momentoFinal.diff(momentoInicial, "minutes");
+
+    return diferenciaEnMinutos;
+  }
 
   return (
     <table className="tabla">
@@ -44,27 +54,24 @@ function Reporte3Analisis({ analisis }) {
       </thead>
       <tbody>
         {analisis?.map((item) => {
-          if (item.nombre_ruta !== currentRoute) {
-            currentRoute = item.nombre_ruta;
-            isEvenRouteGroup = !isEvenRouteGroup;
-          }
-
+          const t_f = calcTimeTotal(item.hora_inicial, item.hora_final);
           return (
-            <tr
-              key={item.id}
-              className={
-                isEvenRouteGroup ? "even-route-group" : "odd-route-group"
-              }
-            >
+            <tr key={item.id}>
               {tableTemplate.map((templateItem, index) => (
                 <td
                   key={index}
                   className={
-                    templateItem.row === "estado" &&
-                    "estado-" + item[templateItem.row]
+                    templateItem.row +
+                    (templateItem.row === "estado"
+                      ? " estado-" + item[templateItem.row]
+                      : "")
                   }
                 >
-                  {item[templateItem.row]}
+                  {templateItem.row === "tram"
+                    ? t_f
+                      ? `${t_f} min`
+                      : "-"
+                    : item[templateItem.row] || "-"}
                 </td>
               ))}
             </tr>

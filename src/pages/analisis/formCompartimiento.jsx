@@ -58,8 +58,6 @@ function FormCompartimiento({
       hora_final: data.hora_final,
     };
 
-    console.log("body", body);
-
     await fetch(
       `${URL_BASE}/analisis/${toUpdate ? "update" : "add"}Analisis.php`,
       {
@@ -111,8 +109,8 @@ function FormCompartimiento({
   };
 
   const calculateSolidosTotales = (v, SNG) => {
-    const formula = SNG * v["grasa"];
-    return formula.toFixed(1);
+    const formula = parseFloat(SNG) + parseFloat(v["grasa"]);
+    return formula?.toFixed(1);
   };
 
   useEffect(() => {
@@ -257,7 +255,7 @@ function FormCompartimiento({
           )}
           {values?.hora_inicial && values?.hora_final && (
             <div className="fields_time">
-              <div>Tiempo Total:</div>
+              <div>TRAM:</div>
               <div>{calcTimeTotal()} minutos</div>
             </div>
           )}

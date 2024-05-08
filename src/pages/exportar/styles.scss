@@ -181,4 +181,22 @@
       }
     }
   }
+
+  .tabla {
+    th {
+      font-size: 10px;
+      padding: 10px 0px;
+      text-align: center;
+    }
+    td {
+      font-size: 13px;
+    }
+    .observaciones {
+      font-size: 10px;
+    }
+
+    /* .fecha {
+      font-size: 0.875rem;
+    } */
+  }
 }
