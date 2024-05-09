@@ -36,29 +36,26 @@ function View({
   return (
     <div className="page rutas" id="full">
       <div className="header-page">
-        <Header title="Rutas" icon={<FaRoute />}>
-          <div
-            data-tooltip-id="my-tooltip"
-            data-tooltip-content="Agregar"
-            data-tooltip-place="bottom"
-            className="add"
-            onClick={() => {
+        <Header
+          title="Rutas"
+          icon={<FaRoute />}
+          action={{
+            label: "Agregar ruta",
+            icon: <FaPlus />,
+            onClick: () => {
               setIsModalOpen(!isModalOpen);
               setDataModal({ type: "Agregar" });
-            }}
-          >
-            <FaPlus />
-          </div>
-        </Header>
+            },
+          }}
+        />
       </div>
       <div className="content-page">
         <table className="tabla">
           <thead>
             <tr>
               <th scope="col">Nombre</th>
-              <th scope="col">Direccion</th>
-              <th scope="col">Coordenadas</th>
-              <th scope="col">Compartimientos</th>
+              <th scope="col">Latitud</th>
+              <th scope="col">Longitud</th>
               <th></th>
             </tr>
           </thead>
@@ -68,9 +65,8 @@ function View({
               ?.map((ruta) => (
                 <tr key={ruta?.nombre}>
                   <td data-label="nombre">{ruta.nombre}</td>
-                  <td data-label="direccion">{ruta.direccion}</td>
-                  <td data-label="direccion">lat: - long: -</td>
-                  <td data-label="direccion">{ruta.compartimientos}</td>
+                  <td data-label="direccion">{ruta.latitud}</td>
+                  <td data-label="direccion">{ruta.longitud}</td>
                   <td>
                     <div className="actions">
                       <div
@@ -140,12 +136,9 @@ function View({
               ))}
             </div>
             <div className="button-form">
-              <input
-                type="submit"
-                value="Guardar"
-                className="button"
-                disabled={!isValid}
-              />
+              <button type="submit" className="button" disabled={!isValid}>
+                Guardar
+              </button>
             </div>
           </form>
         </Modal>

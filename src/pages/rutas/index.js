@@ -29,7 +29,8 @@ function Index() {
   useEffect(() => {
     if (dataModal?.type === "Modificar") {
       setValue("nombre", dataModal?.nombre);
-      setValue("direccion", dataModal?.direccion);
+      setValue("latitud", dataModal?.latitud);
+      setValue("longitud", dataModal?.longitud);
     }
   }, [dataModal]);
 
@@ -119,9 +120,16 @@ function Index() {
       }),
     },
     {
-      label: "Direccion",
+      label: "Latitud",
       type: "text",
-      ...register("direccion", {
+      ...register("latitud", {
+        required: true,
+      }),
+    },
+    {
+      label: "Longitud",
+      type: "text",
+      ...register("longitud", {
         required: true,
       }),
     },

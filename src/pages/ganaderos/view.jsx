@@ -29,7 +29,18 @@ function View({
   return (
     <div className="page ganaderos" id="full">
       <div className="header-page">
-        <Header title="Ganaderos" icon={<FaHatCowboy />}>
+        <Header
+          title="Ganaderos"
+          icon={<FaHatCowboy />}
+          action={{
+            label: "Agregar ganadero",
+            icon: <FaUserPlus />,
+            onClick: () => {
+              setIsModalOpen(!isModalOpen);
+              setDataModal({ type: "Agregar" });
+            },
+          }}
+        >
           <div className="options-header">
             <div>
               <input
@@ -39,15 +50,6 @@ function View({
                 placeholder="Buscar..."
                 onChange={(e) => search(e.target.value)}
               />
-            </div>
-            <div
-              className="add"
-              onClick={() => {
-                setIsModalOpen(!isModalOpen);
-                setDataModal({ type: "Agregar" });
-              }}
-            >
-              <FaUserPlus />
             </div>
           </div>
         </Header>

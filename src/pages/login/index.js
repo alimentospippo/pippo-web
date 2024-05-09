@@ -36,7 +36,21 @@ function Index() {
     setLoadingLogin(false);
   };
 
-  const props = { user, setUser, password, setPassword, login, loadingLogin };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      login();
+    }
+  };
+
+  const props = {
+    user,
+    setUser,
+    password,
+    setPassword,
+    login,
+    loadingLogin,
+    handleKeyPress,
+  };
 
   return <View {...props} />;
 }

@@ -28,17 +28,18 @@ function View({
   return (
     <div className="page conductores" id="full">
       <div className="header-page">
-        <Header title="Conductores" icon={<ImTruck />}>
-          <div
-            className="add"
-            onClick={() => {
+        <Header
+          title="Conductores"
+          icon={<ImTruck />}
+          action={{
+            label: "Agregar conductor",
+            icon: <FaUserPlus />,
+            onClick: () => {
               setIsModalOpen(!isModalOpen);
               setDataModal({ type: "Agregar" });
-            }}
-          >
-            <FaUserPlus />
-          </div>
-        </Header>
+            },
+          }}
+        />
       </div>
 
       <div className="content-page">

@@ -10,8 +10,8 @@ function Reporte3Analisis({ analisis }) {
     { title: "Compartimiento", row: "compartimiento" },
     { title: "Estado", row: "estado" },
     { title: "Silo", row: "silo" },
-    { title: "Hora Inicio", row: "hora_inicial" },
-    { title: "Hora Fin", row: "hora_final" },
+    { title: "Puebra TRAM", row: "prueba_tram" },
+    { title: "Resultado TRAM", row: "resultado_tram" },
     { title: "TRAM", row: "tram" },
     { title: "Acidez", row: "acidez" },
     { title: "Alcohol", row: "alcohol" },
@@ -33,16 +33,6 @@ function Reporte3Analisis({ analisis }) {
     { title: "Observaciones", row: "observaciones" },
   ];
 
-  function calcTimeTotal(h_i, h_f) {
-    const formato = "HH:mm";
-    const momentoInicial = moment(h_i, formato);
-    const momentoFinal = moment(h_f, formato);
-
-    const diferenciaEnMinutos = momentoFinal.diff(momentoInicial, "minutes");
-
-    return diferenciaEnMinutos;
-  }
-
   return (
     <table className="tabla">
       <thead>
@@ -54,7 +44,6 @@ function Reporte3Analisis({ analisis }) {
       </thead>
       <tbody>
         {analisis?.map((item) => {
-          const t_f = calcTimeTotal(item.hora_inicial, item.hora_final);
           return (
             <tr key={item.id}>
               {tableTemplate.map((templateItem, index) => (
@@ -67,11 +56,7 @@ function Reporte3Analisis({ analisis }) {
                       : "")
                   }
                 >
-                  {templateItem.row === "tram"
-                    ? t_f
-                      ? `${t_f} min`
-                      : "-"
-                    : item[templateItem.row] || "-"}
+                  {item[templateItem.row] || "-"}
                 </td>
               ))}
             </tr>

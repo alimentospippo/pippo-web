@@ -13,6 +13,7 @@ import "./styles.scss";
 import Reporte1 from "./Reporte1";
 import Reporte2 from "./Reporte2";
 import Reporte3Analisis from "./Reporte3Analisis";
+import moment from "moment";
 
 function View({
   startDate,
@@ -73,6 +74,7 @@ function View({
               name="hasta"
               id="hasta"
               min={startDate}
+              max={moment().format("YYYY-MM-DD")}
               onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
@@ -119,7 +121,7 @@ function View({
                   Buscando...
                 </div>
               </div>
-            ) : recolecciones.length > 0 ? (
+            ) : recolecciones.length > 0 || analisis.length > 0 ? (
               <div className="tabla-main">
                 {reporte === 1 && (
                   <Reporte1

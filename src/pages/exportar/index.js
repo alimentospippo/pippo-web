@@ -27,16 +27,23 @@ function Index() {
     const fechaIni = moment(startDate).format("YYYY-MM-DD");
     const fechaFin = moment(endDate).format("YYYY-MM-DD");
 
+    const obtenerAnalisis = async () => {
+      const responseAnalisis = await axios.get(
+        `${URL_BASE}/analisis/getAnalisisByDate.php?fechaIni=${fechaIni}&fechaFin=${fechaFin}&rutaId=${ruta}`
+      );
+      setAnalisis(responseAnalisis.data);
+    };
+
     setTimeout(async () => {
       try {
-        const response = await axios.get(
-          `${URL_BASE}/recolecciones/getRecoleccionesByFecha.php?fechaIni=${fechaIni}&fechaFin=${fechaFin}&rutaId=${ruta}`
-        );
-        const responseAnalisis = await axios.get(
-          `${URL_BASE}/analisis/getAnalisisByDate.php?fechaIni=${fechaIni}&fechaFin=${fechaFin}&rutaId=${ruta}`
-        );
-        setRecolecciones(response.data);
-        setAnalisis(responseAnalisis.data);
+        if (userLoggued?.tipo === "0") {
+          const response = await axios.get(
+            `${URL_BASE}/recolecciones/getRecoleccionesByFecha.php?fechaIni=${fechaIni}&fechaFin=${fechaFin}&rutaId=${ruta}`
+          );
+          await obtenerAnalisis();
+        } else {
+          await obtenerAnalisis();
+        }
       } catch (error) {
         console.error("Error en la solicitud:", error);
       }

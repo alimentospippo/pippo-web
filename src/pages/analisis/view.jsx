@@ -35,7 +35,17 @@ function View({
   return (
     <div className="page analisis" id="full">
       <div className="header-page">
-        <Header title="Analisis" icon={<FaMicroscope />}>
+        <Header
+          title="Analisis"
+          icon={<FaMicroscope />}
+          action={{
+            label: "Agregar analisis",
+            icon: <FaPlus />,
+            onClick: () => {
+              setModalAddAnalisis(true);
+            },
+          }}
+        >
           <div className="date-add">
             <div className="select-fecha">
               <label className="select-fecha-label">Seleccione fecha:</label>
@@ -46,15 +56,6 @@ function View({
                 max={moment().format("YYYY-MM-DD")}
               />
             </div>
-            <button
-              className="button plus"
-              onClick={() => setModalAddAnalisis(true)}
-            >
-              <div>
-                <FaPlus />
-              </div>
-              <div>Agregar analisis</div>
-            </button>
           </div>
         </Header>
       </div>

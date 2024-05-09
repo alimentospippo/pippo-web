@@ -54,8 +54,8 @@ function FormCompartimiento({
       almidon: data.almidon,
       prueba_suero: data.prueba_suero,
       estado: analisisSelect?.estado ?? estadoAnalisis,
-      hora_inicial: data.hora_inicial,
-      hora_final: data.hora_final,
+      prueba_tram: data.prueba_tram,
+      resultado_tram: data.resultado_tram,
     };
 
     await fetch(
@@ -175,7 +175,13 @@ function FormCompartimiento({
 
   const handleKeyDown = (event) => {
     const regex = /^[0-9.-]$/;
-    const allowedKeys = ["ArrowLeft", "ArrowRight", "Backspace", "Delete"];
+    const allowedKeys = [
+      "ArrowLeft",
+      "ArrowRight",
+      "Backspace",
+      "Delete",
+      "Tab",
+    ];
     if (!regex.test(event.key) && !allowedKeys.includes(event.key)) {
       event.preventDefault();
     }
@@ -190,16 +196,6 @@ function FormCompartimiento({
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
-  function calcTimeTotal() {
-    const formato = "HH:mm";
-    const momentoInicial = moment(values?.hora_inicial, formato);
-    const momentoFinal = moment(values?.hora_final, formato);
-
-    const diferenciaEnMinutos = momentoFinal.diff(momentoInicial, "minutes");
-
-    return diferenciaEnMinutos;
   }
 
   return (
@@ -230,11 +226,11 @@ function FormCompartimiento({
           </div>
         </div>
       </div>
-      <form className="form_main">
+      <div className="form_main">
         <div className="inputs_fields">
           {FORM_FIELDS.map(
             (field, index) =>
-              field.type === "time" && (
+              field.tram && (
                 <div key={index}>
                   <div className="input_field">
                     <div className="labels">
@@ -242,34 +238,32 @@ function FormCompartimiento({
                       <label>{field.name.replaceAll("_", " ")}</label>
                     </div>
                     <input
-                      type="time"
+                      type={field.type}
                       value={values[field.name] || ""}
                       onChange={(e) => {
                         handleInputChange(e.target.value, field.name);
                       }}
                       disabled={isEditor ? false : analisisSelect?.estado}
+                      tabIndex={index}
                     />
                   </div>
                 </div>
               )
-          )}
-          {values?.hora_inicial && values?.hora_final && (
-            <div className="fields_time">
-              <div>TRAM:</div>
-              <div>{calcTimeTotal()} minutos</div>
-            </div>
           )}
         </div>
 
         <div className="inputs_fields">
           {FORM_FIELDS.map(
             (field, index) =>
-              field.type === "text" && (
+              field.type === "text" &&
+              !field.tram && (
                 <div key={index}>
                   <div className="input_field">
                     <div className="labels">
                       <div className="icon_field">{field.icon}</div>
-                      <label>{field.name.replaceAll("_", " ")}</label>
+                      <label>
+                        {field.label || field.name.replaceAll("_", " ")}
+                      </label>
                       {field.min !== undefined && field.max !== undefined && (
                         <label className="range">
                           ({field.min}
@@ -300,6 +294,7 @@ function FormCompartimiento({
                           : ""
                       }
                       disabled={isEditor ? false : analisisSelect?.estado}
+                      tabIndex={index}
                     />
                   </div>
                 </div>
@@ -334,6 +329,7 @@ function FormCompartimiento({
                             onChange={(e) =>
                               handleInputChange(option.name, field.name)
                             }
+                            tabIndex={index}
                           />
                           <label>{option.name}</label>
                         </div>
@@ -418,7 +414,7 @@ function FormCompartimiento({
             Actualizar
           </button>
         )}
-      </form>
+      </div>
     </div>
   );
 }

@@ -27,19 +27,22 @@ export const positivo_negativo = [{ name: "positivo" }, { name: "negativo" }];
 
 export const FORM_FIELDS = [
   {
-    name: "hora_inicial",
+    name: "prueba_tram",
     type: "time",
+    tram: true,
     icon: <FaClock size={12} />,
     required: true,
   },
   {
-    name: "hora_final",
-    type: "time",
-    icon: <FaClock size={12} />,
+    name: "resultado_tram",
+    type: "text",
+    tram: true,
+    icon: <FaVial size={12} />,
     required: true,
   },
   {
     name: "silo",
+    label: "Silo de recibo",
     type: "text",
     icon: <FaDrumSteelpan size={12} />,
     required: true,
