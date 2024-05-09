@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/pippo-web/static/css/main.71a0fe77.css",
-    "main.js": "/pippo-web/static/js/main.b0b08f20.js",
+    "main.css": "/pippo-web/static/css/main.32ada179.css",
+    "main.js": "/pippo-web/static/js/main.da51c411.js",
     "static/js/239.d54b2e11.chunk.js": "/pippo-web/static/js/239.d54b2e11.chunk.js",
     "static/js/213.f1d4163e.chunk.js": "/pippo-web/static/js/213.f1d4163e.chunk.js",
     "static/js/732.6fa7588d.chunk.js": "/pippo-web/static/js/732.6fa7588d.chunk.js",
@@ -10,15 +10,15 @@
     "service-worker.js": "/pippo-web/service-worker.js",
     "static/media/logo_pipo.png": "/pippo-web/static/media/logo_pipo.ebe7292063d634d6e043.png",
     "index.html": "/pippo-web/index.html",
-    "main.71a0fe77.css.map": "/pippo-web/static/css/main.71a0fe77.css.map",
-    "main.b0b08f20.js.map": "/pippo-web/static/js/main.b0b08f20.js.map",
+    "main.32ada179.css.map": "/pippo-web/static/css/main.32ada179.css.map",
+    "main.da51c411.js.map": "/pippo-web/static/js/main.da51c411.js.map",
     "239.d54b2e11.chunk.js.map": "/pippo-web/static/js/239.d54b2e11.chunk.js.map",
     "213.f1d4163e.chunk.js.map": "/pippo-web/static/js/213.f1d4163e.chunk.js.map",
     "732.6fa7588d.chunk.js.map": "/pippo-web/static/js/732.6fa7588d.chunk.js.map",
     "488.9c463c6f.chunk.js.map": "/pippo-web/static/js/488.9c463c6f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.71a0fe77.css",
-    "static/js/main.b0b08f20.js"
+    "static/css/main.32ada179.css",
+    "static/js/main.da51c411.js"
   ]
 }
