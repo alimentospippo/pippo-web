@@ -40,6 +40,8 @@ function Index() {
           const response = await axios.get(
             `${URL_BASE}/recolecciones/getRecoleccionesByFecha.php?fechaIni=${fechaIni}&fechaFin=${fechaFin}&rutaId=${ruta}`
           );
+
+          setRecolecciones(response.data);
           await obtenerAnalisis();
         } else {
           await obtenerAnalisis();

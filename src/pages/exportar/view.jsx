@@ -121,7 +121,7 @@ function View({
                   Buscando...
                 </div>
               </div>
-            ) : recolecciones.length > 0 || analisis.length > 0 ? (
+            ) : recolecciones.length > 0 /* || analisis.length > 0  */ ? (
               <div className="tabla-main">
                 {reporte === 1 && (
                   <Reporte1
