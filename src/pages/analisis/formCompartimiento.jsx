@@ -105,12 +105,12 @@ function FormCompartimiento({
 
   const calculateSolidosNoGrasos = (v) => {
     const formula = (v["densidad"] - 1) * 250 + 0.14 + 0.2 * v["grasa"];
-    return formula.toFixed(1);
+    return formula.toFixed(2);
   };
 
   const calculateSolidosTotales = (v, SNG) => {
     const formula = parseFloat(SNG) + parseFloat(v["grasa"]);
-    return formula?.toFixed(1);
+    return formula?.toFixed(2);
   };
 
   useEffect(() => {
@@ -198,33 +198,49 @@ function FormCompartimiento({
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  const summaryAnalisis = [
+    {
+      label: "Ruta",
+      value: recoleccionSelect?.ruta?.toUpperCase(),
+      className: "ruta",
+    },
+    {
+      label: "Fecha analisis",
+      value: analisisSelect?.fecha || moment().format("YYYY-MM-DD"),
+    },
+    {
+      label: "Fecha recoleccion",
+      value:
+        analisisSelect?.fecha_recoleccion ||
+        moment(fechaSelect).format("YYYY-MM-DD"),
+    },
+    { label: "C/miento", value: compartimientoSelect },
+    {
+      label: "Litros",
+      value: recoleccionSelect[`compartimiento${compartimientoSelect}`] || "-",
+    },
+    {
+      label: "Analista",
+      value:
+        analisisSelect?.nombre_usuario.toUpperCase() ||
+        userLoggued?.nombre.toUpperCase(),
+    },
+    {
+      label: "Estado",
+      value: analisisSelect?.estado || "Pendiente",
+      className: `pill_status ${analisisSelect?.estado || "pendiente"}`,
+    },
+  ];
+
   return (
     <div className="form_analisis">
       <div className="comp_title">
-        <div className="ruta_select">
-          {`Ruta: ${recoleccionSelect?.ruta?.toUpperCase()}`}
-        </div>
-        <div>
-          Fecha analisis:{" "}
-          {analisisSelect?.fecha || moment().format("YYYY-MM-DD")}
-        </div>
-        <div>
-          Fecha recoleccion:{" "}
-          {analisisSelect?.fecha_recoleccion ||
-            moment(fechaSelect).format("YYYY-MM-DD")}
-        </div>
-        <div>Compartimiento: {compartimientoSelect}</div>
-        <div>
-          Analista: {analisisSelect?.nombre_usuario || userLoggued?.nombre}
-        </div>
-        <div className="status_analisis">
-          <div>Estado:</div>
-          <div
-            className={`pill_status ${analisisSelect?.estado || "pendiente"}`}
-          >
-            {analisisSelect?.estado || "Pendiente"}
+        {summaryAnalisis.map((item, index) => (
+          <div className="data_summary" key={index}>
+            <div className="label">{item.label}</div>
+            <div className={`value ${item.className}`}>{item.value}</div>
           </div>
-        </div>
+        ))}
       </div>
       <div className="form_main">
         <div className="inputs_fields">

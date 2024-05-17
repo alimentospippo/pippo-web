@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./styles.scss";
 import moment from "moment";
 import FormCompartimiento from "./formCompartimiento";
+import { icons } from "../icons";
 
 function View({
   recoleccionesNew,
@@ -120,9 +121,9 @@ function View({
       </div>
 
       {isLoadingAnalisis && !isLoading ? (
-        <div className="no-data">
-          <FaSearch />
-          Buscando analisis...
+        <div className="loading-data">
+          <div className="loading-icon">{icons("loading")}</div>
+          <div>Buscando analisis...</div>
         </div>
       ) : (
         recoleccionSelect && (

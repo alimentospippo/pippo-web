@@ -30,6 +30,15 @@
     padding: 40px;
   }
 
+  .loading-data {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    .loading-icon {
+      width: 25px;
+    }
+  }
+
   .options-header {
     display: flex;
     gap: 10px;
@@ -96,6 +105,35 @@
   }
   .comp_title {
     margin-bottom: 20px;
+    display: flex;
+    border: 1px solid #e0e0e0;
+    padding: 20px 0;
+    border-radius: 5px;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .data_summary {
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      border-right: 1px solid #e0e0e0;
+      padding: 0 20px;
+
+      .label {
+        font-weight: bold;
+      }
+
+      .ruta {
+        font-size: 14px;
+        color: #c90000;
+        font-weight: bold;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
   }
   .form_analisis {
     .inputs_fields {
