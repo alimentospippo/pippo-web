@@ -198,7 +198,13 @@ function FormCompartimiento({
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  console.log("analisisSelect", analisisSelect);
+
   const summaryAnalisis = [
+    {
+      label: "ID",
+      value: analisisSelect?.analisis_id || "-",
+    },
     {
       label: "Ruta",
       value: recoleccionSelect?.ruta?.toUpperCase(),
