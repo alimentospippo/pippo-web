@@ -190,15 +190,21 @@ function View({
                 handleInputChange("ruta", parseInt(e.target.value))
               }
             >
-              {rutas?.map((ruta) => (
-                <option
-                  value={parseInt(ruta.id)}
-                  className="option"
-                  selected={parseInt(ruta.id) === formCreateAnalisis.ruta}
-                >
-                  {ruta.nombre}
-                </option>
-              ))}
+              {rutas
+                .filter((ruta) => {
+                  return !recoleccionesNew.some((recoleccion) => {
+                    return parseInt(recoleccion.ruta_id) === parseInt(ruta.id);
+                  });
+                })
+                ?.map((ruta) => (
+                  <option
+                    value={parseInt(ruta.id)}
+                    className="option"
+                    selected={parseInt(ruta.id) === formCreateAnalisis.ruta}
+                  >
+                    {ruta.nombre}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="add_label">
