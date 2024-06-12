@@ -101,7 +101,7 @@ function Index() {
   const [modalAddAnalisis, setModalAddAnalisis] = useState(false);
   const [formCreateAnalisis, setFormCreateAnalisis] = useState({
     fecha: moment().format("YYYY-MM-DD"),
-    ruta: 1,
+    ruta: 0,
     conductor: 13,
     litros: 0,
   });

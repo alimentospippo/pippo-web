@@ -190,6 +190,13 @@ function View({
                 handleInputChange("ruta", parseInt(e.target.value))
               }
             >
+              <option
+                className="option"
+                selected={formCreateAnalisis.ruta === 0}
+                disabled
+              >
+                Seleccione ruta
+              </option>
               {rutas
                 .filter((ruta) => {
                   return !recoleccionesNew.some((recoleccion) => {
