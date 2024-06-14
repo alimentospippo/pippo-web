@@ -65,7 +65,7 @@ function View({
               <th>Dirección</th>
               <th>Ruta</th>
               <th>Promedio</th>
-              <th className="precio">Precio lt</th>
+              <th className="precio_th">Precio</th>
               <th></th>
             </tr>
           </thead>
@@ -76,16 +76,16 @@ function View({
                 <tr key={index}>
                   <td>{ganadero.documento}</td>
                   <td>{ganadero.telefono}</td>
-                  <td>{ganadero.nombre}</td>
+                  <td> {ganadero.nombre.toLowerCase()}</td>
                   <td>{ganadero.direccion}</td>
                   <td>{ganadero.ruta_nombre}</td>
                   <td>{ganadero.promedio} lts</td>
                   <td>
-                    <div className="precio">$ {ganadero.precio} </div>
+                    <div className="precio">{`$ ${ganadero.precio}`}</div>
                   </td>
                   <td>
                     <div className="actions">
-                      <div
+                      {/* <div
                         className="item"
                         onClick={() => {
                           setIsModalDeleteOpen(true);
@@ -93,7 +93,7 @@ function View({
                         }}
                       >
                         <MdDeleteForever />
-                      </div>
+                      </div> */}
                       <div
                         className="item"
                         onClick={() => {
