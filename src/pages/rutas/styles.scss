@@ -30,10 +30,29 @@
       margin-top: 10px;
       display: flex;
       justify-content: center;
+
+      .button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+
+    .inputs-main {
+      width: 300px;
+
+      .error {
+        color: red;
+        font-size: 12px;
+        font-weight: bold;
+      }
+      .input-error {
+        border: 2px solid red;
+      }
     }
 
     .inputs {
-      width: 100%;
+      width: 300px;
     }
   }
 
@@ -55,4 +74,8 @@
   display: flex;
   gap: 5px;
   justify-content: center;
+}
+
+.icon-loading {
+  width: 20px;
 }

@@ -59,6 +59,7 @@ function View({
         <table className="tabla">
           <thead>
             <tr>
+              <th>Id</th>
               <th>Documento</th>
               <th>Teléfono</th>
               <th>Nombre</th>
@@ -74,12 +75,15 @@ function View({
               ?.sort((a, b) => a.nombre.localeCompare(b.nombre))
               .map((ganadero, index) => (
                 <tr key={index}>
+                  <td>{ganadero.id}</td>
                   <td>{ganadero.documento}</td>
-                  <td>{ganadero.telefono}</td>
+                  <td>{ganadero.telefono || "-"}</td>
                   <td> {ganadero.nombre.toLowerCase()}</td>
-                  <td>{ganadero.direccion}</td>
+                  <td>{ganadero.direccion || "-"}</td>
                   <td>{ganadero.ruta_nombre}</td>
-                  <td>{ganadero.promedio} lts</td>
+                  <td>
+                    {ganadero.promedio ? `${ganadero.promedio} lts` : "-"}
+                  </td>
                   <td>
                     <div className="precio">{`$ ${ganadero.precio}`}</div>
                   </td>

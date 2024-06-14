@@ -64,12 +64,12 @@ function View({
       <div className="content-page">
         {isLoading && isLoadingAnalisis ? (
           <div className="no-data">
-            <FaSearch />
+            <div className="icon-loading">{icons("loading")}</div>
             Descargando datos...
           </div>
         ) : isLoading ? (
           <div className="no-data">
-            <FaSearch />
+            <div className="icon-loading">{icons("loading")}</div>
             Buscando recolecciones...
           </div>
         ) : recoleccionesNew?.length ? (

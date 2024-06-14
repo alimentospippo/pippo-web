@@ -17,13 +17,14 @@ function Index() {
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [modalByGanaderos, setModalByGanaderos] = useState(false);
   const [dataModal, setDataModal] = useState();
+  const [loading, setLoading] = useState(null);
 
   const {
     reset,
     register,
     handleSubmit,
     setValue,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({ mode: "onChange" });
 
   useEffect(() => {
@@ -35,6 +36,7 @@ function Index() {
   }, [dataModal]);
 
   const add = (data) => {
+    setLoading(true);
     fetch(`${URL_BASE}/rutas/add.php`, {
       method: "POST",
       body: JSON.stringify({
@@ -52,9 +54,11 @@ function Index() {
         reset();
       }
     });
+    setLoading(false);
   };
 
   const update = (data) => {
+    setLoading(true);
     fetch(`${URL_BASE}/rutas/update.php`, {
       method: "POST",
       body: JSON.stringify({
@@ -77,6 +81,7 @@ function Index() {
       .catch((error) => {
         notifyError();
       });
+    setLoading(false);
   };
 
   const onSubmit = (data) => {
@@ -111,26 +116,61 @@ function Index() {
       });
   };
 
+  const validateLatitude = (value) => {
+    if (value === "") return true;
+    const num = parseFloat(value);
+    if (!/^-?\d+(\.\d+)?$/.test(value)) {
+      return "Latitud no valida";
+    }
+    if (num < -90 || num > 90) {
+      return "Latitud no valida";
+    }
+    return true;
+  };
+
+  const validateLongitude = (value) => {
+    if (value === "") return true;
+    const num = parseFloat(value);
+    if (!/^-?\d+(\.\d+)?$/.test(value)) {
+      return "Longitud no valida";
+    }
+    if (num < -180 || num > 180) {
+      return "Longitud no valida";
+    }
+    return true;
+  };
+
+  const validateNombre = (value) => {
+    if (/ruta/i.test(value)) {
+      return "El nombre no debe contener la palabra 'ruta'";
+    }
+    return true;
+  };
+
   const formAdd = [
     {
-      label: "Ruta",
+      label: "Nombre",
+      field: "nombre",
       type: "text",
       ...register("nombre", {
         required: true,
+        validate: validateNombre,
       }),
     },
     {
       label: "Latitud",
+      field: "latitud",
       type: "text",
       ...register("latitud", {
-        required: true,
+        validate: validateLatitude,
       }),
     },
     {
       label: "Longitud",
+      field: "longitud",
       type: "text",
       ...register("longitud", {
-        required: true,
+        validate: validateLongitude,
       }),
     },
   ];
@@ -213,6 +253,8 @@ function Index() {
     updateOrderGanaderos,
     ganaderosOrder,
     updateOrder,
+    errors,
+    loading,
   };
   return <View {...props} />;
 }

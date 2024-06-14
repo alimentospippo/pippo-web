@@ -1,7 +1,7 @@
 import React from "react";
 import { FaRoute, FaPlus, FaHatCowboy } from "react-icons/fa";
 import Header from "../header";
-import { MdDeleteForever } from "react-icons/md";
+import { icons } from "../icons";
 import {
   AiFillEdit,
   AiOutlineCaretUp,
@@ -32,6 +32,8 @@ function View({
   updateOrderGanaderos,
   ganaderosOrder,
   updateOrder,
+  errors,
+  loading,
 }) {
   return (
     <div className="page rutas" id="full">
@@ -53,6 +55,7 @@ function View({
         <table className="tabla">
           <thead>
             <tr>
+              <th scope="col">ID</th>
               <th scope="col">Nombre</th>
               <th scope="col">Latitud</th>
               <th scope="col">Longitud</th>
@@ -64,12 +67,13 @@ function View({
               ?.sort((a, b) => a.nombre.localeCompare(b.nombre))
               ?.map((ruta) => (
                 <tr key={ruta?.nombre}>
+                  <td data-label="nombre">{ruta.id}</td>
                   <td data-label="nombre">{ruta.nombre}</td>
-                  <td data-label="direccion">{ruta.latitud}</td>
-                  <td data-label="direccion">{ruta.longitud}</td>
+                  <td data-label="direccion">{ruta.latitud || "-"}</td>
+                  <td data-label="direccion">{ruta.longitud || "-"}</td>
                   <td>
                     <div className="actions">
-                      <div
+                      {/* <div
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content="Eliminar"
                         data-tooltip-place="bottom"
@@ -80,7 +84,7 @@ function View({
                         }}
                       >
                         <MdDeleteForever />
-                      </div>
+                      </div> */}
                       <div
                         data-tooltip-id="my-tooltip"
                         data-tooltip-content="Editar"
@@ -129,15 +133,32 @@ function View({
           <form onSubmit={handleSubmit(onSubmit)} className="formulario">
             <div>
               {formAdd.map((item) => (
-                <div className="formulario-item">
+                <div className="formulario-item" key={item.label}>
                   <label>{item.label}:</label>
-                  <input {...item} className="inputs" />
+                  <div className="inputs-main">
+                    <input
+                      {...item}
+                      className={`inputs ${
+                        errors[item.field] ? "input-error" : ""
+                      }`}
+                    />
+                    {errors[item.field] && (
+                      <p className="error">{errors[item.field].message}</p>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
             <div className="button-form">
-              <button type="submit" className="button" disabled={!isValid}>
-                Guardar
+              <button
+                type="submit"
+                className="button"
+                disabled={!isValid || loading}
+              >
+                {loading && (
+                  <div className="icon-loading">{icons("loading")}</div>
+                )}
+                {loading ? "Guardando..." : "Guardar"}
               </button>
             </div>
           </form>

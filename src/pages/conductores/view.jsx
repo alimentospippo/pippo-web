@@ -61,7 +61,7 @@ function View({
 
                 <td>
                   <div className="actions">
-                    <div
+                    {/*  <div
                       className="item"
                       onClick={() => {
                         setIsModalDeleteOpen(true);
@@ -69,7 +69,7 @@ function View({
                       }}
                     >
                       <MdDeleteForever />
-                    </div>
+                    </div> */}
                     <div
                       className="item"
                       onClick={() => {
