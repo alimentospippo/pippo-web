@@ -20,8 +20,6 @@ function Index() {
   const [compartimientoSelect, setCompartimientoSelect] = useState(1);
   const [recoleccionSelect, setRecoleccionSelect] = useState(null);
 
-  console.log("recoleccionesNew", recoleccionesNew);
-
   const getListAnalisisById = async (id_recoleccion) => {
     setIsLoadingAnalisis(true);
 

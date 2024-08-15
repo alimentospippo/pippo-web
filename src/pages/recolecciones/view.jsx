@@ -36,29 +36,65 @@ function View({
   setFilter,
   goToMaps,
 }) {
+  const generateGoogleMapsUrl = () => {
+    const waypoints = recoleccionesNew.filter(
+      (item) => item.conductor === "Wilson"
+    );
+
+    console.log("waypoints", waypoints);
+
+    if (waypoints.length < 2) {
+      console.error("Debe haber al menos dos puntos de waypoints.");
+      return "";
+    }
+
+    const origin = waypoints[0];
+    const destination = waypoints[waypoints.length - 1];
+    const waypointsString = waypoints
+      .slice(1, -1)
+      .map((point) => point.gps_lat + "," + point.gps_long)
+      .join("|");
+
+    console.log("waypointsString", waypointsString);
+
+    const url = `https://www.google.com/maps/dir/?api=1&origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&waypoints=${waypointsString}&travelmode=driving`;
+
+    // window.open(url, "_blank");
+  };
+
+  // Ejemplo de uso
+  const waypoints = [
+    { lat: 41.3851, lng: 2.1734 }, // Barcelona
+    { lat: 40.7128, lng: -74.006 }, // New York
+    { lat: 34.0522, lng: -118.2437 }, // Los Angeles
+    { lat: 37.7749, lng: -122.4194 }, // San Francisco
+  ];
+
   return (
     <div className="page recolecciones" id="full">
       <div className="header-page">
         <Header title="Recolecciones" icon={<FaStickyNote />}>
           <div className="filters">
-            <div className="select-ganadero">
-              <label className="select-fecha-x">Ganadero:</label>
-              <div className="filter">
-                <input
-                  type="text"
-                  name="g"
-                  id="g"
-                  value={filter}
-                  onChange={(e) => {
-                    setFilter(e.target.value);
-                    filterByGanadero(e.target.value);
-                  }}
-                />
-                <button onClick={() => clearFilter()}>
-                  <AiOutlineClose />
-                </button>
+            {recoleccionesNew?.length > 0 && (
+              <div className="select-ganadero">
+                <label className="select-fecha-x">Ganadero:</label>
+                <div className="filter">
+                  <input
+                    type="text"
+                    name="g"
+                    id="g"
+                    value={filter}
+                    onChange={(e) => {
+                      setFilter(e.target.value);
+                      filterByGanadero(e.target.value);
+                    }}
+                  />
+                  <button onClick={() => clearFilter()}>
+                    <AiOutlineClose />
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
             <div className="select-fecha">
               <label className="select-fecha-x">Seleccione fecha:</label>
               <DatePicker
@@ -71,6 +107,9 @@ function View({
           </div>
         </Header>
       </div>
+      {/*   <button onClick={() => generateGoogleMapsUrl()}>
+        Generar Ruta en Google Maps
+      </button> */}
 
       <div className="content-page">
         {isLoading ? (

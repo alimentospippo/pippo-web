@@ -103,7 +103,7 @@ function View({
                 onClick={() => setReporte(tab.id)}
               >
                 {tab.title}{" "}
-                {recolecciones?.length > 0 && (
+                {(recolecciones?.length > 0 || analisis.length) && (
                   <div className="export-tab">
                     <CSVLink {...csvOptions}>
                       <FaFileExcel color="green" />
@@ -121,7 +121,7 @@ function View({
                   Buscando...
                 </div>
               </div>
-            ) : recolecciones.length > 0 /* || analisis.length > 0  */ ? (
+            ) : recolecciones.length > 0 || analisis.length > 0 ? (
               <div className="tabla-main">
                 {reporte === 1 && (
                   <Reporte1
