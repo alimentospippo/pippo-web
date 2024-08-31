@@ -12,6 +12,7 @@ import Modal from "../../components/modal";
 import ModalDelete from "../../components/modalDelete";
 import { ToastContainer } from "react-toastify";
 import { Tooltip } from "react-tooltip";
+import Toogle from "../../components/toogle";
 
 function View({
   rutas,
@@ -34,6 +35,8 @@ function View({
   updateOrder,
   errors,
   loading,
+  activeInactive,
+  loadingRutas,
 }) {
   return (
     <div className="page rutas" id="full">
@@ -52,69 +55,69 @@ function View({
         />
       </div>
       <div className="content-page">
-        <table className="tabla">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Latitud</th>
-              <th scope="col">Longitud</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {rutas
-              ?.sort((a, b) => a.nombre.localeCompare(b.nombre))
-              ?.map((ruta) => (
-                <tr key={ruta?.nombre}>
-                  <td data-label="nombre">{ruta.id}</td>
-                  <td data-label="nombre">{ruta.nombre}</td>
-                  <td data-label="direccion">{ruta.latitud || "-"}</td>
-                  <td data-label="direccion">{ruta.longitud || "-"}</td>
-                  <td>
-                    <div className="actions">
-                      {/* <div
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content="Eliminar"
-                        data-tooltip-place="bottom"
-                        className="item"
-                        onClick={() => {
-                          setIsModalDeleteOpen(true);
-                          setDataModal(ruta);
-                        }}
-                      >
-                        <MdDeleteForever />
-                      </div> */}
-                      <div
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content="Editar"
-                        data-tooltip-place="bottom"
-                        className="item"
-                        onClick={() => {
-                          setIsModalOpen(!isModalOpen);
-                          setDataModal({ ...ruta, type: "Modificar" });
-                        }}
-                      >
-                        <AiFillEdit />
+        <div className="table-main">
+          <table className="tabla ">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Latitud</th>
+                <th scope="col">Longitud</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {rutas
+                ?.sort((a, b) => a.nombre.localeCompare(b.nombre))
+                ?.map((ruta) => (
+                  <tr key={ruta?.nombre}>
+                    <td data-label="nombre">
+                      <Toogle
+                        active={parseInt(ruta.activo) === 1}
+                        onClick={activeInactive}
+                        id={ruta.id}
+                        disabled={loadingRutas}
+                      />
+                    </td>
+                    <td data-label="nombre">{ruta.id}</td>
+                    <td data-label="nombre">{ruta.nombre}</td>
+                    <td data-label="direccion">{ruta.latitud || "-"}</td>
+                    <td data-label="direccion">{ruta.longitud || "-"}</td>
+                    <td>
+                      <div className="actions">
+                        <div
+                          data-tooltip-id="my-tooltip"
+                          data-tooltip-content="Editar"
+                          data-tooltip-place="bottom"
+                          className="item"
+                          onClick={() => {
+                            setIsModalOpen(!isModalOpen);
+                            setDataModal({ ...ruta, type: "Modificar" });
+                          }}
+                        >
+                          <AiFillEdit />
+                        </div>
+                        <div
+                          data-tooltip-id="my-tooltip"
+                          data-tooltip-content="Ganaderos"
+                          data-tooltip-place="bottom"
+                          className="item"
+                          onClick={() => {
+                            setModalByGanaderos(true);
+                            setDataModal(ruta);
+                          }}
+                        >
+                          <FaHatCowboy />
+                        </div>
                       </div>
-                      <div
-                        data-tooltip-id="my-tooltip"
-                        data-tooltip-content="Ganaderos"
-                        data-tooltip-place="bottom"
-                        className="item"
-                        onClick={() => {
-                          setModalByGanaderos(true);
-                          setDataModal(ruta);
-                        }}
-                      >
-                        <FaHatCowboy />
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+
         <ToastContainer
           position="bottom-center"
           theme="colored"

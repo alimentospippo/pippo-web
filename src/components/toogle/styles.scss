@@ -1,0 +1,38 @@
+.toogle {
+  width: 24px;
+  border-radius: 20px;
+  height: 14px;
+  padding: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &.active {
+    background-color: #20ca58;
+    transform: translateX(5px);
+  }
+  &.inactive {
+    background-color: #c5c5c5;
+  }
+}
+.toogle__item {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 6px;
+  transition: all 0.3s ease-in-out;
+  transform: translateX(0);
+  background-color: #ffffff;
+
+  &.active {
+    transform: translateX(5px);
+  }
+  &.inactive {
+    transform: translateX(-5px);
+  }
+}

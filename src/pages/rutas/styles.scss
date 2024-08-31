@@ -7,6 +7,12 @@
     width: fit-content;
   }
 
+  .tabla {
+    td:first-child {
+      width: 20px;
+    }
+  }
+
   .formulario {
     display: flex;
     flex-direction: column;

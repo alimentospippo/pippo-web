@@ -73,6 +73,31 @@ function Index() {
       });
   };
 
+  const activeInactive = (id, activo) => {
+    fetch(`${URL_BASE}/ganaderos/updateActiveInactive.php`, {
+      method: "POST",
+      body: JSON.stringify({
+        item: {
+          id: id,
+          activo: activo ? 0 : 1,
+        },
+      }),
+    })
+      .then((response) => {
+        if (response.status === 400) {
+          notifyError();
+        } else {
+          setIsModalOpen(false);
+          notifySuccess("modifico");
+          getListAllGanaderos();
+          reset();
+        }
+      })
+      .catch((error) => {
+        notifyError();
+      });
+  };
+
   const update = (data) => {
     fetch(`${URL_BASE}/ganaderos/update.php`, {
       method: "POST",
@@ -203,6 +228,7 @@ function Index() {
     formAdd,
     ganaderosFilter,
     search,
+    activeInactive,
   };
 
   return <View {...props} />;

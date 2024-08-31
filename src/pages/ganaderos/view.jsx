@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./styles.scss";
 import Modal from "../../components/modal";
 import ModalDelete from "../../components/modalDelete";
+import Toogle from "../../components/toogle";
 
 function View({
   ganaderos,
@@ -25,6 +26,7 @@ function View({
   formAdd,
   ganaderosFilter,
   search,
+  activeInactive,
 }) {
   return (
     <div className="page ganaderos" id="full">
@@ -59,6 +61,7 @@ function View({
         <table className="tabla">
           <thead>
             <tr>
+              <th></th>
               <th>Id</th>
               <th>Documento</th>
               <th>Teléfono</th>
@@ -75,6 +78,13 @@ function View({
               ?.sort((a, b) => a.nombre.localeCompare(b.nombre))
               .map((ganadero, index) => (
                 <tr key={index}>
+                  <td>
+                    <Toogle
+                      active={parseInt(ganadero.activo) === 1}
+                      onClick={activeInactive}
+                      id={ganadero.id}
+                    />
+                  </td>
                   <td>{ganadero.id}</td>
                   <td>{ganadero.documento}</td>
                   <td>{ganadero.telefono || "-"}</td>

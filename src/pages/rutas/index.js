@@ -7,8 +7,13 @@ import { URL_BASE } from "../../constants";
 import { useContextoPippo } from "../../ContextoPippo";
 
 function Index() {
-  const { getListAllRutas, rutas, ganaderos, getListAllGanaderos } =
-    useContextoPippo();
+  const {
+    getListAllRutas,
+    rutas,
+    ganaderos,
+    getListAllGanaderos,
+    loadingRutas,
+  } = useContextoPippo();
 
   const notifySuccess = (message) => toast.success(`Se ${message} la ruta`);
   const notifySuccessOrden = (message) => toast.success(`Se modifico el orden`);
@@ -234,6 +239,31 @@ function Index() {
       });
   };
 
+  const activeInactive = (id, activo) => {
+    fetch(`${URL_BASE}/rutas/updateActiveInactive.php`, {
+      method: "POST",
+      body: JSON.stringify({
+        item: {
+          id: id,
+          activo: activo ? 0 : 1,
+        },
+      }),
+    })
+      .then((response) => {
+        if (response.status === 400) {
+          notifyError();
+        } else {
+          setIsModalOpen(false);
+          notifySuccess("modifico");
+          getListAllRutas();
+          reset();
+        }
+      })
+      .catch((error) => {
+        notifyError();
+      });
+  };
+
   const props = {
     rutas,
     deleteItem,
@@ -255,6 +285,8 @@ function Index() {
     updateOrder,
     errors,
     loading,
+    activeInactive,
+    loadingRutas,
   };
   return <View {...props} />;
 }

@@ -12,11 +12,14 @@ const ContextoPippoProvider = ({ children }) => {
   const [recolecciones, setRecolecciones] = useState(null);
   const [userLoggued, setUserLoggued] = useState(null);
   const [login, setLogin] = useState(false);
+  const [loadingRutas, setLoadingRutas] = useState(null);
 
   const getListAllGanaderos = () => {
-    axios.get(`${URL_BASE}/ganaderos/getListGanaderos.php`).then((response) => {
-      setGanaderos(response.data);
-    });
+    axios
+      .get(`${URL_BASE}/ganaderos/getListGanaderosAll.php`)
+      .then((response) => {
+        setGanaderos(response.data);
+      });
   };
 
   const getListAllConductores = () => {
@@ -27,10 +30,16 @@ const ContextoPippoProvider = ({ children }) => {
       });
   };
 
-  const getListAllRutas = () => {
-    axios.get(`${URL_BASE}/rutas/getListRutas.php`).then((response) => {
+  const getListAllRutas = async () => {
+    try {
+      setLoadingRutas(true);
+      const response = await axios.get(`${URL_BASE}/rutas/getListRutas.php`);
       setRutas(response.data);
-    });
+    } catch (error) {
+      console.error("Error al obtener la lista de rutas:", error);
+    } finally {
+      setLoadingRutas(false);
+    }
   };
 
   const getListAllRecolecciones = async () => {
@@ -77,6 +86,7 @@ const ContextoPippoProvider = ({ children }) => {
         getListAllGanaderos,
         getListAllRutas,
         getListAllConductores,
+        loadingRutas,
       }}
     >
       {children}
