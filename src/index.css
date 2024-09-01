@@ -43,6 +43,17 @@ select {
   padding: 0 10px;
   border: 1px solid #c9000059;
 }
+select {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+select {
+  background-image: url("/src/assets/arrow-down.png");
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 10px) center;
+}
 
 input {
   height: 40px;

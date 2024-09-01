@@ -103,12 +103,14 @@ function View({
                 onClick={() => setReporte(tab.id)}
               >
                 {tab.title}{" "}
-                {(recolecciones?.length > 0 || analisis.length) && (
+                {recolecciones?.length > 0 || analisis.length ? (
                   <div className="export-tab">
                     <CSVLink {...csvOptions}>
                       <FaFileExcel color="green" />
                     </CSVLink>
                   </div>
+                ) : (
+                  ""
                 )}
               </div>
             ))}

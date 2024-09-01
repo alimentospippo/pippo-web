@@ -27,6 +27,9 @@ function View({
   ganaderosFilter,
   search,
   activeInactive,
+  loadingGanaderos,
+  rutas,
+  filterRuta,
 }) {
   return (
     <div className="page ganaderos" id="full">
@@ -44,15 +47,24 @@ function View({
           }}
         >
           <div className="options-header">
-            <div>
-              <input
-                type="search"
-                name="search"
-                id="search"
-                placeholder="Buscar..."
-                onChange={(e) => search(e.target.value)}
-              />
-            </div>
+            <select
+              name="search_ruta"
+              id="search_ruta"
+              className="search_ruta"
+              onChange={(e) => filterRuta(e.target.value)}
+            >
+              <option value="all">Todas</option>
+              {rutas?.map((ruta) => (
+                <option value={parseInt(ruta.id)}>{ruta.nombre}</option>
+              ))}
+            </select>
+            <input
+              type="search"
+              name="search"
+              id="search"
+              placeholder="Buscar..."
+              onChange={(e) => search(e.target.value)}
+            />
           </div>
         </Header>
       </div>
@@ -83,6 +95,7 @@ function View({
                       active={parseInt(ganadero.activo) === 1}
                       onClick={activeInactive}
                       id={ganadero.id}
+                      disabled={loadingGanaderos}
                     />
                   </td>
                   <td>{ganadero.id}</td>
@@ -99,15 +112,6 @@ function View({
                   </td>
                   <td>
                     <div className="actions">
-                      {/* <div
-                        className="item"
-                        onClick={() => {
-                          setIsModalDeleteOpen(true);
-                          setDataModal(ganadero);
-                        }}
-                      >
-                        <MdDeleteForever />
-                      </div> */}
                       <div
                         className="item"
                         onClick={() => {

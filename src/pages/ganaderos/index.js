@@ -7,7 +7,8 @@ import { URL_BASE } from "../../constants";
 import { useContextoPippo } from "../../ContextoPippo";
 
 function Index() {
-  const { ganaderos, rutas, getListAllGanaderos } = useContextoPippo();
+  const { ganaderos, rutas, getListAllGanaderos, loadingGanaderos } =
+    useContextoPippo();
 
   const notifySuccess = (message) => toast.success(`Se ${message} el ganadero`);
   const notifyError = () => toast.error("Error, intente de nuevo");
@@ -15,18 +16,38 @@ function Index() {
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [dataModal, setDataModal] = useState();
   const [ganaderosFilter, setGanaderosFilter] = useState([]);
+  const [searchActual, setSearchActual] = useState(null);
+  const [filterRutaActual, setFilterRutaActual] = useState(null);
 
   const search = (e) => {
+    setSearchActual(e);
+    const search = e.toLowerCase();
     const fil = ganaderos?.filter(
       (g) =>
-        g?.nombre?.toLowerCase().includes(e) ||
-        g?.documento?.toLowerCase().includes(e)
+        g?.nombre?.toLowerCase().includes(search) ||
+        g?.documento?.toLowerCase().includes(search)
     );
     setGanaderosFilter(fil);
   };
 
+  const filterRuta = (e) => {
+    setFilterRutaActual(e);
+    if (e === "all") {
+      setGanaderosFilter(ganaderos);
+    } else {
+      const fil = ganaderos?.filter((g) => parseInt(g.ruta) === parseInt(e));
+      setGanaderosFilter(fil);
+    }
+  };
+
   useEffect(() => {
-    setGanaderosFilter(ganaderos);
+    if (searchActual) {
+      search(searchActual);
+    } else if (filterRutaActual) {
+      filterRuta(filterRutaActual);
+    } else {
+      setGanaderosFilter(ganaderos);
+    }
   }, [ganaderos]);
 
   const {
@@ -229,6 +250,9 @@ function Index() {
     ganaderosFilter,
     search,
     activeInactive,
+    loadingGanaderos,
+    rutas,
+    filterRuta,
   };
 
   return <View {...props} />;
