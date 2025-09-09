@@ -1,0 +1,123 @@
+.usuarios {
+  .content-page {
+    display: flex;
+    gap: 20px;
+
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+      width: 100%;
+
+      img {
+        width: 30px;
+      }
+    }
+
+    .formulario_usuario {
+      padding: 20px;
+      margin: 20px;
+      flex: 1;
+      border: 1px solid #d3d3d3;
+      border-radius: 10px;
+      font-size: 14px;
+      height: fit-content;
+
+      input {
+        text-transform: lowercase;
+      }
+      h4 {
+        margin-bottom: 20px;
+      }
+      .button {
+        text-transform: capitalize;
+      }
+    }
+    .tr_active {
+      background-color: #c90000ab;
+    }
+
+    .inputs_flex {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+
+      .inputs {
+        flex: 2;
+      }
+      .button {
+        flex: 1;
+        max-width: 20px;
+        min-width: 20px;
+      }
+    }
+
+    .inputs_control {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      width: 100%;
+      span {
+        font-size: 12px;
+        color: red;
+      }
+
+      input {
+        border: 1px solid #d3d3d3;
+      }
+
+      select {
+        border: 1px solid #d3d3d3;
+      }
+
+      .input_error {
+        border: 1px solid red;
+      }
+    }
+  }
+  .tabla_usuario {
+    flex: 1;
+  }
+  .tabla_usuario td {
+    text-transform: lowercase;
+    width: 10px;
+  }
+  .add {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: fit-content;
+  }
+
+  .formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    &-item {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 15px;
+      label {
+        width: 110px;
+        min-width: 110px;
+      }
+      input,
+      select {
+        background-color: rgb(248, 250, 252);
+        text-transform: capitalize;
+      }
+    }
+
+    .button-form {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .inputs {
+      width: 100%;
+    }
+  }
+}

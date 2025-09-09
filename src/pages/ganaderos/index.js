@@ -60,6 +60,7 @@ function Index() {
 
   useEffect(() => {
     if (dataModal?.type === "Modificar") {
+      setValue("id", dataModal?.id);
       setValue("documento", dataModal?.documento);
       setValue("telefono", dataModal?.telefono);
       setValue("nombre", dataModal?.nombre);

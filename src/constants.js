@@ -4,5 +4,5 @@ export const USERS = {
   2: "analista",
   3: "supervisor",
 };
-//export const URL_BASE = "https://pippo-test.000webhostapp.com/api";
+
 export const URL_BASE = "https://www.alimentospippo.com/app-alimentospippo/api";

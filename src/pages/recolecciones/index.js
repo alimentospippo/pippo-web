@@ -67,7 +67,6 @@ function Index() {
     "GPS",
     "Observaciones",
     "Litros",
-    "Total",
   ];
 
   const update = (data) => {

@@ -14,13 +14,7 @@ function App() {
           <div className="img-logo">{icons("logo")}</div>
           <p>¡Bienvenido a Pippo!</p>
           <p>
-            Para una mejor experiencia, por favor descarga nuestra aplicación.
-          </p>
-          <p>
-            <a href="https://pippo-test.000webhostapp.com/app_pippo.zip">
-              Haz click aqui
-            </a>
-            .
+            Para una mejor experiencia, abre este enlace desde un pc
           </p>
         </div>
       ) : (

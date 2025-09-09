@@ -58,7 +58,7 @@ function Index() {
       });
   };
   const update = (data) => {
-    fetch(`${URL_BASE}.000webhostapp.com/api/conductores/update.php`, {
+    fetch(`${URL_BASE}/conductores/update.php`, {
       method: "POST",
       body: JSON.stringify({
         item: {
@@ -90,7 +90,7 @@ function Index() {
   };
 
   const deleteItem = (id) => {
-    fetch(`${URL_BASE}.000webhostapp.com/api/conductores/delete.php`, {
+    fetch(`${URL_BASE}/conductores/delete.php`, {
       method: "POST",
       body: JSON.stringify({
         item: {

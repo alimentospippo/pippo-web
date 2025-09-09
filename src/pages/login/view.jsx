@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.scss";
 
-function View({
+function LoginWeb({
   user,
   setUser,
   password,
@@ -12,6 +12,7 @@ function View({
   login,
   loadingLogin,
   handleKeyPress,
+  handleChange,
 }) {
   return (
     <div className=" login" id="full">
@@ -23,7 +24,8 @@ function View({
             type="text"
             name="user"
             id="user"
-            onChange={(e) => setUser(e.target.value)}
+            value={user}
+            onChange={handleChange}
             onKeyDown={handleKeyPress}
           />
           <div className="label">Contraseña:</div>
@@ -37,7 +39,7 @@ function View({
           <button
             className="button"
             onClick={() => login()}
-            disabled={!user || !password || loadingLogin}
+            disabled={user === "" || password === "" || loadingLogin}
           >
             <div className="button-content">
               {loadingLogin && (
@@ -48,13 +50,20 @@ function View({
           </button>
         </div>
       </div>
+    </div>
+  );
+}
 
+function View(props) {
+  return (
+    <>
+      <LoginWeb {...props} />
       <ToastContainer
         position="bottom-center"
         theme="colored"
         autoClose={5000}
       />
-    </div>
+    </>
   );
 }
 

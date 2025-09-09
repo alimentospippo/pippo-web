@@ -14,6 +14,7 @@ const ContextoPippoProvider = ({ children }) => {
   const [login, setLogin] = useState(false);
   const [loadingRutas, setLoadingRutas] = useState(null);
   const [loadingGanaderos, setLoadingGanaderos] = useState(null);
+  const [usuarios, setUsuarios] = useState(null);
 
   const getListAllGanaderos = async () => {
     try {
@@ -62,6 +63,22 @@ const ContextoPippoProvider = ({ children }) => {
       });
   };
 
+  const [loadingUsuarios, setLoadingUsuarios] = useState(null);
+
+  const getListUsuarios = async () => {
+    setLoadingUsuarios(true);
+    try {
+      const response = await axios
+        .get(`${URL_BASE}/usuarios/getListUsuarios.php`)
+        .then((response) => {
+          setUsuarios(response.data);
+        });
+    } catch (error) {
+    } finally {
+      setLoadingUsuarios(false);
+    }
+  };
+
   useEffect(() => {
     const userLOCAL = localStorage.getItem("user");
     if (userLOCAL) {
@@ -76,6 +93,7 @@ const ContextoPippoProvider = ({ children }) => {
       getListAllConductores();
       getListAllRutas();
       getListAllRecolecciones();
+      getListUsuarios();
     }
   }, [login]);
 
@@ -95,6 +113,9 @@ const ContextoPippoProvider = ({ children }) => {
         getListAllConductores,
         loadingRutas,
         loadingGanaderos,
+        usuarios,
+        getListUsuarios,
+        loadingUsuarios,
       }}
     >
       {children}

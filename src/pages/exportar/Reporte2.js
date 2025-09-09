@@ -11,6 +11,8 @@ function Reporte2({ recolecciones }) {
     "Total",
   ];
 
+  console.log(recolecciones);
+
   return (
     <table className="tabla">
       <thead>

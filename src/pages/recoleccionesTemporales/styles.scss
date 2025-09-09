@@ -1,0 +1,209 @@
+.recolecciones_temp {
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    width: 100%;
+
+    img {
+      width: 30px;
+    }
+  }
+
+  .filters {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .button_aprobar {
+      margin-top: 14px;
+    }
+  }
+  .filter {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    border-radius: 24px;
+    padding: 0 10px;
+    border: 1px solid #e8e8e8;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: fit-content;
+    gap: 10px;
+    background-color: #e8e8e8c2;
+    input {
+      padding: 0;
+      border: none;
+      height: 39px;
+      width: 130px;
+      background-color: transparent;
+    }
+  }
+
+  .filtros_card {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    .filtros_search {
+      display: flex;
+      align-items: center;
+      gap: 55px;
+    }
+  }
+
+  .go_to_map {
+    cursor: pointer;
+  }
+
+  .select-ganadero {
+    width: 167px;
+    font-size: 12px;
+  }
+
+  .select-fecha {
+    font-size: 12px;
+    display: flex;
+    border: 1px solid #e8e8e8;
+    background-color: #e8e8e8c2;
+    border-radius: 24px;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+
+    .react-datepicker__calendar-icon {
+      margin-top: 5px;
+    }
+    input {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  .no-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 40px;
+  }
+
+  .column-gps {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &-invalido {
+      color: red;
+    }
+
+    &-valido {
+      color: green;
+    }
+  }
+  .column-litros {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .icon {
+      cursor: pointer;
+      margin-top: 4px;
+    }
+    .item-edit {
+      height: 20px;
+      width: 60px;
+      text-align: center;
+    }
+  }
+
+  .aprobar_pendientes {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: fit-content;
+
+      button {
+        text-decoration: underline;
+        color: #000;
+        cursor: pointer;
+
+        &:hover {
+          color: #c90000;
+        }
+      }
+      .date_button_active {
+        background-color: #c90000;
+        border-radius: 24px;
+        padding: 2px 10px;
+        color: #ffffff;
+        font-weight: 600;
+        &:hover {
+          color: #ffffff;
+          background-color: #c90000;
+        }
+      }
+    }
+  }
+
+  .filtro_rutas {
+    padding: 20px;
+    .title {
+      margin-bottom: 10px;
+    }
+    .list-rutas {
+      display: flex;
+      gap: 10px;
+      width: fit-content;
+    }
+    .button-rutas {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      background-color: #e8e8e8c2;
+      border-radius: 24px;
+      padding: 10px;
+      text-transform: capitalize;
+      height: fit-content;
+      &:hover {
+        background-color: #e8e8e8;
+      }
+    }
+
+    .button-rutas.active {
+      background-color: #c90000;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .sub_filtro_rutas {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .select-rutas {
+      width: 167px;
+      font-size: 12px;
+      text-transform: capitalize;
+      border-radius: 20px;
+      background-color: #e8e8e8c2;
+      border: none;
+    }
+  }
+}

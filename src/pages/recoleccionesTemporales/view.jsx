@@ -1,33 +1,28 @@
 import React from "react";
-import {
-  FaStickyNote,
-  FaRegFrown,
-  FaSearch,
-  FaMapMarked,
-} from "react-icons/fa";
+import { FaStickyNote, FaSearch, FaMapMarked, FaCheck } from "react-icons/fa";
+import { icons } from "../icons";
 import {
   AiFillEdit,
   AiFillSave,
   AiOutlineClose,
   AiOutlineCheckCircle,
   AiOutlineCloseCircle,
+  AiOutlineExclamationCircle,
 } from "react-icons/ai";
-import DatePicker from "react-datepicker";
 import Header from "../header";
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import "./styles.scss";
+import moment from "moment";
 
 function View({
   recoleccionesNew,
   getListAllRecolecciones,
   tableTemplate,
-  fechaSelect,
   isLoading,
   setToEdit,
   toEdit,
-  newLts,
   setNewLts,
   onSubmit,
   filterByGanadero,
@@ -35,6 +30,16 @@ function View({
   filter,
   setFilter,
   goToMaps,
+  saveRecolecciones,
+  recoleccionesPendientes,
+  ganaderos,
+  conductores,
+  recoleccionesUnicas,
+  filterByRuta,
+  getRutaName,
+  recoleccionesTemp,
+  loadingRecoleccionesPendientes,
+  fechaSelect,
 }) {
   const generateGoogleMapsUrl = () => {
     const waypoints = recoleccionesNew.filter(
@@ -71,52 +76,96 @@ function View({
   ];
 
   return (
-    <div className="page recolecciones" id="full">
+    <div className="page recolecciones_temp" id="full">
       <div className="header-page">
-        <Header title="Recolecciones" icon={<FaStickyNote />}>
-          <div className="filters">
-            {recoleccionesNew?.length > 0 && (
-              <div className="select-ganadero">
-                <label className="select-fecha-x">Ganadero:</label>
-                <div className="filter">
-                  <input
-                    type="text"
-                    name="g"
-                    id="g"
-                    value={filter}
-                    onChange={(e) => {
-                      setFilter(e.target.value);
-                      filterByGanadero(e.target.value);
-                    }}
-                  />
-                  <button onClick={() => clearFilter()}>
-                    <AiOutlineClose />
-                  </button>
+        <Header title="Recolecciones preliminares" icon={<FaStickyNote />} />
+      </div>
+
+      {recoleccionesPendientes?.length > 0 && (
+        <>
+          <div className="content-page">
+            <div className="aprobar_pendientes">
+              <div className="title">
+                <AiOutlineExclamationCircle color="#c90000" />
+                <div>
+                  Hay {recoleccionesPendientes?.length} fechas pendientes para
+                  aprobar
                 </div>
               </div>
-            )}
-            <div className="select-fecha">
-              <label className="select-fecha-x">Seleccione fecha:</label>
-              <DatePicker
-                selected={fechaSelect}
-                onChange={(e) => getListAllRecolecciones(e)}
-                maxDate={new Date()}
-                showIcon={true}
-              />
+
+              <div className="list ">
+                {recoleccionesPendientes?.map((item) => (
+                  <button
+                    className={`${
+                      moment(fechaSelect).format("YYYY-MM-DD") === item.fecha &&
+                      "date_button_active"
+                    }`}
+                    onClick={() => getListAllRecolecciones(item.fecha)}
+                  >
+                    {item.fecha}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </Header>
-      </div>
-      {/*   <button onClick={() => generateGoogleMapsUrl()}>
-        Generar Ruta en Google Maps
-      </button> */}
+
+          {recoleccionesTemp?.length > 0 && (
+            <div className="content-page">
+              <div className="filtro_rutas">
+                <div className="sub_filtro_rutas">
+                  <div className="list-rutas">
+                    <select
+                      className="select-rutas"
+                      name="rutas"
+                      id="rutas"
+                      onChange={(e) => filterByRuta(e.target.value)}
+                    >
+                      <option disabled>Ruta</option>
+                      <option value="todas">Todas</option>
+                      {recoleccionesUnicas?.map((item) => (
+                        <option value={item?.ruta}>
+                          {getRutaName(item?.ruta)}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="filter">
+                      <FaSearch color={"#aeaeae"} />
+                      <input
+                        type="text"
+                        name="g"
+                        id="g"
+                        value={filter}
+                        onChange={(e) => {
+                          setFilter(e.target.value);
+                          filterByGanadero(e.target.value);
+                        }}
+                        placeholder="Buscar ganadero..."
+                      />
+                      <button onClick={() => clearFilter()}>
+                        <AiOutlineClose />
+                      </button>
+                    </div>
+                  </div>
+                  {recoleccionesNew?.length > 0 && (
+                    <div className="button_aprobar">
+                      <button
+                        className="button-ok"
+                        onClick={() => saveRecolecciones()}
+                      >
+                        {`Aprobar ${recoleccionesNew?.length} recolecciones`}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
 
       <div className="content-page">
-        {isLoading ? (
-          <div className="no-data">
-            <FaSearch />
-            Buscando...
-          </div>
+        {isLoading || loadingRecoleccionesPendientes ? (
+          <div className="loading">{icons("loading")}</div>
         ) : recoleccionesNew?.length ? (
           <table className="tabla">
             <thead>
@@ -132,9 +181,21 @@ function View({
                   <td>{item?.id}</td>
                   <td>{item?.fecha}</td>
                   <td>{item?.hora}</td>
-                  <td>{item?.ruta}</td>
-                  <td>{item?.ganadero}</td>
-                  <td>{item?.conductor}</td>
+                  <td>{getRutaName(item?.ruta)}</td>
+                  <td>
+                    {
+                      ganaderos?.find(
+                        (r) => parseInt(r.id) === parseInt(item?.ganadero)
+                      )?.nombre
+                    }
+                  </td>
+                  <td>
+                    {
+                      conductores?.find(
+                        (r) => parseInt(r.id) === parseInt(item?.conductor)
+                      )?.nombre
+                    }
+                  </td>
                   <td>
                     <div className="column-gps">
                       {!item?.gps_lat && !item?.gps_long ? (
@@ -192,15 +253,24 @@ function View({
           </table>
         ) : (
           <div className="no-data">
-            <FaRegFrown />
-            No hay datos para esta fecha
+            {!filter ? (
+              <>
+                <FaCheck />
+                <div>Seleccione fecha</div>
+              </>
+            ) : (
+              <>
+                <FaSearch />
+                <div>No hay datos con la busqueda {filter}</div>
+              </>
+            )}
           </div>
         )}
       </div>
       <ToastContainer
         position="bottom-center"
         theme="colored"
-        autoClose={3000}
+        autoClose={1000}
         hideProgressBar={true}
         pauseOnHover={false}
       />

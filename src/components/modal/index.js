@@ -8,7 +8,7 @@ function Index({ children, isOpen, onClose, title, actions, footerActions }) {
   }
 
   return (
-    <div className="modal-background">
+    <div className="modal-background-web">
       <div className="modal-content">
         <div className="title">
           {title}
